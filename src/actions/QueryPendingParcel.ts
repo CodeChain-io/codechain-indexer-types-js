@@ -10,8 +10,8 @@ import {
     PendingTransactionDoc,
     TransactionDoc
 } from "../types";
-import { BaseAction } from "./BaseAction";
 import { Type } from "../utils";
+import { BaseAction } from "./BaseAction";
 
 export class QueryPendingParcel implements BaseAction {
     public agent!: ElasticSearchAgent;

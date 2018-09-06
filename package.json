@@ -10,8 +10,8 @@
     "lodash": "^4.17.10"
   },
   "scripts": {
-    "lint": "tslint -p . && prettier '{src}/**/*.{ts,js,json}' -l",
-    "fmt": "tslint -p . --fix && prettier '{src}/**/*.{ts,js,json}' --write",
+    "lint": "tslint -p . && prettier 'src/**/*.{ts,js,json}' -l",
+    "fmt": "tslint -p . --fix && prettier 'src/**/*.{ts,js,json}' --write",
     "build": "tsc -p ."
   },
   "keywords": [
@@ -28,6 +28,7 @@
     "@types/elasticsearch": "^5.0.26",
     "@types/lodash": "^4.14.116",
     "@types/node": "^10.9.4",
+    "prettier": "^1.14.2",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
     "typescript": "^3.0.3"
