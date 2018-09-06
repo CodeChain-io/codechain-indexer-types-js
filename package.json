@@ -1,0 +1,32 @@
+{
+  "name": "codechain-es",
+  "version": "0.1.0-rc1",
+  "description": "Wrapper module for accessing CodeChain elasticsearch",
+  "repository": "https://github.com/CodeChain-io/codechain-es",
+  "dependencies": {
+    "buffer": "^5.2.1",
+    "codechain-sdk": "^0.1.1-rc2",
+    "elasticsearch": "^15.1.1",
+    "lodash": "^4.17.10"
+  },
+  "scripts": {
+    "lint": "tslint -p . && prettier '{src,examples,integration_tests}/**/*.{ts,js,json}' -l",
+    "fmt": "tslint -p . --fix && prettier '{src,examples,integration_tests}/**/*.{ts,js,json}' --write",
+    "build": "tsc -p ."
+  },
+  "author": "CodeChain Team <codechain@kodebox.io>",
+  "main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "license": "ISC",
+  "devDependencies": {
+    "@types/elasticsearch": "^5.0.26",
+    "@types/lodash": "^4.14.116",
+    "@types/node": "^10.9.4",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "typescript": "^3.0.3"
+  }
+}
