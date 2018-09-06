@@ -1,6 +1,6 @@
 # CodeChain ES
 
-This is a wrapper class for accessing the elasticsearch of CodeChain.
+CodeChain ES provides a collection of wrapper classes for accessing the elasticsearch index of CodeChain.
 
 ## Features
 
