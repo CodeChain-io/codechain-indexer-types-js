@@ -14,6 +14,9 @@
     "fmt": "tslint -p . --fix && prettier '{src,examples,integration_tests}/**/*.{ts,js,json}' --write",
     "build": "tsc -p ."
   },
+  "keywords": [
+    "CodeChain"
+  ],
   "author": "CodeChain Team <codechain@kodebox.io>",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
