@@ -1,4 +1,4 @@
-# CodeChain ES
+# CodeChain ES [![npm version](https://badge.fury.io/js/codechain-es.svg)](https://badge.fury.io/js/codechain-es)
 
 CodeChain ES provides a collection of wrapper classes for accessing the elasticsearch index of CodeChain.
 
