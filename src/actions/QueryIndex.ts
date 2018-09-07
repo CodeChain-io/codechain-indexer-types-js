@@ -2,6 +2,7 @@ import { Client } from "elasticsearch";
 import { ElasticSearchAgent } from "..";
 import { getAccountMapping } from "../mappings/mapping_account";
 import { getMappingBlock } from "../mappings/mapping_block";
+import { getMappingImageBlob } from "../mappings/mapping_image_blob";
 import { getMappingLog } from "../mappings/mapping_log";
 import { getMappingParcel } from "../mappings/mapping_parcel";
 import { getMappingPendingParcel } from "../mappings/mapping_pending_parcel";
@@ -30,6 +31,9 @@ export class QueryIndex implements BaseAction {
         });
         const isMappingAccountExisted = await this.client.indices.exists({
             index: "account"
+        });
+        const isMappingImageBlobExisted = await this.client.indices.exists({
+            index: "image_blob"
         });
         if (!isMappingBlockExisted) {
             await this.client.indices.create({
@@ -89,6 +93,16 @@ export class QueryIndex implements BaseAction {
                 index: "account",
                 type: "_doc",
                 body: getAccountMapping()
+            });
+        }
+        if (!isMappingImageBlobExisted) {
+            await this.client.indices.create({
+                index: "image_blob"
+            });
+            await this.client.indices.putMapping({
+                index: "image_blob",
+                type: "_doc",
+                body: getMappingImageBlob()
             });
         }
     }

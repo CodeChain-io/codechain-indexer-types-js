@@ -2,6 +2,7 @@ import { H256 } from "codechain-sdk/lib/core/classes";
 import { Client, CountResponse, DeleteDocumentResponse, SearchResponse } from "elasticsearch";
 import { Account, QueryAccount } from "./actions/QueryAccount";
 import { QueryBlock } from "./actions/QueryBlock";
+import { QueryImage } from "./actions/QueryImage";
 import { QueryIndex } from "./actions/QueryIndex";
 import { LogData, LogType, QueryLog } from "./actions/QueryLog";
 import { QueryParcel } from "./actions/QueryParcel";
@@ -21,7 +22,15 @@ import {
 } from "./types";
 
 export class ElasticSearchAgent
-    implements QueryBlock, QueryParcel, QueryTransaction, QueryPendingParcel, QueryIndex, QueryLog, QueryAccount {
+    implements
+        QueryBlock,
+        QueryParcel,
+        QueryTransaction,
+        QueryPendingParcel,
+        QueryIndex,
+        QueryLog,
+        QueryAccount,
+        QueryImage {
     public client: Client;
     public agent: ElasticSearchAgent;
     public getBlockByHash!: (hash: H256) => Promise<BlockDoc | null>;
@@ -130,6 +139,9 @@ export class ElasticSearchAgent
     public getAccount!: (address: string) => Promise<Account | null>;
     public getAccounts!: () => Promise<Account[]>;
     public getPendingAssetScheme!: (assetType: H256) => Promise<AssetSchemeDoc | null>;
+    public getAssetImageBlob!: (assetType: H256) => Promise<string | null>;
+    public indexImage!: (assetType: H256, imageBlob: string) => Promise<any>;
+    public searchImage!: (body: any) => Promise<SearchResponse<any>>;
 
     constructor(host: string) {
         this.client = new Client({
@@ -152,7 +164,8 @@ applyMixins(ElasticSearchAgent, [
     QueryPendingParcel,
     QueryIndex,
     QueryLog,
-    QueryAccount
+    QueryAccount,
+    QueryImage
 ]);
 function applyMixins(derivedCtor: any, baseCtors: any[]) {
     baseCtors.forEach(baseCtor => {
