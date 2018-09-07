@@ -62,7 +62,7 @@ export class QueryParcel implements BaseAction {
                         { term: { isRetracted: false } },
                         {
                             bool: {
-                                should: [{ term: { sender: address } }, { term: { "action.receiver": address } }]
+                                should: [{ term: { signer: address } }, { term: { "action.receiver": address } }]
                             }
                         }
                     ]
@@ -80,7 +80,7 @@ export class QueryParcel implements BaseAction {
                         { term: { isRetracted: false } },
                         {
                             bool: {
-                                should: [{ term: { sender: address } }, { term: { "action.receiver": address } }]
+                                should: [{ term: { signer: address } }, { term: { "action.receiver": address } }]
                             }
                         }
                     ]

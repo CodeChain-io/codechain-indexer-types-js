@@ -29,7 +29,7 @@ export interface ParcelDoc {
     hash: string;
     action: ActionDoc;
     /* custom field for indexing */
-    sender: string;
+    signer: string;
     timestamp: number;
     countOfTransaction: number;
     isRetracted: boolean;

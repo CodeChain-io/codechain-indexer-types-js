@@ -20,7 +20,7 @@ import {
     Transaction,
     U256
 } from "codechain-sdk/lib/core/classes";
-import { AssetTransferAddress } from "codechain-sdk/lib/key/classes";
+import { AssetTransferAddress, PlatformAddress } from "codechain-sdk/lib/key/classes";
 import * as _ from "lodash";
 import {
     ActionDoc,
@@ -252,6 +252,11 @@ export class TypeConverter {
 
     public fromParcel = async (parcel: SignedParcel, timestamp: number): Promise<ParcelDoc> => {
         const action = await this.fromAction(parcel.unsigned.action, timestamp, parcel);
+        let owner = await this.sdk.rpc.chain.getRegularKeyOwner(parcel.getSignerPublic());
+        if (!owner) {
+            owner = PlatformAddress.fromPublic(parcel.getSignerPublic());
+        }
+
         return {
             blockNumber: parcel.blockNumber,
             blockHash: parcel.hash().value,
@@ -259,7 +264,7 @@ export class TypeConverter {
             nonce: parcel.unsigned.nonce ? parcel.unsigned.nonce.value.toString(10) : "0",
             fee: parcel.unsigned.fee ? parcel.unsigned.fee.value.toString(10) : "0",
             networkId: parcel.unsigned.networkId,
-            sender: parcel.getSignerAddress().value,
+            signer: owner.value,
             sig: parcel.toJSON().sig,
             hash: parcel.hash().value,
             action,
@@ -271,7 +276,6 @@ export class TypeConverter {
     };
 
     public fromBlock = async (block: Block, defaultMiningReward: number): Promise<BlockDoc> => {
-        const blockJson = block.toJSON();
         const parcelDocs = await Promise.all(_.map(block.parcels, parcel => this.fromParcel(parcel, block.timestamp)));
         const chainMiningReward = block.number === 0 ? 0 : defaultMiningReward;
         const miningReward = _.reduce(
@@ -282,17 +286,17 @@ export class TypeConverter {
             .plus(chainMiningReward)
             .toString(10);
         return {
-            parentHash: blockJson.parentHash,
-            timestamp: blockJson.timestamp,
-            number: blockJson.number,
-            author: blockJson.author,
-            extraData: Buffer.from(blockJson.extraData),
-            parcelsRoot: blockJson.parcelsRoot,
-            stateRoot: blockJson.stateRoot,
-            invoicesRoot: blockJson.invoicesRoot,
-            score: blockJson.score,
-            seal: _.map(blockJson.seal, s => Buffer.from(s)),
-            hash: blockJson.hash,
+            parentHash: block.parentHash.value,
+            timestamp: block.timestamp,
+            number: block.number,
+            author: block.author.value,
+            extraData: Buffer.from(block.extraData),
+            parcelsRoot: block.parcelsRoot.value,
+            stateRoot: block.stateRoot.value,
+            invoicesRoot: block.invoicesRoot.value,
+            score: block.score.value.toString(10),
+            seal: _.map(block.seal, s => Buffer.from(s)),
+            hash: block.hash.value,
             parcels: parcelDocs,
             isRetracted: false,
             miningReward

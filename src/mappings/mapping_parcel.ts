@@ -26,7 +26,7 @@ export const getMappingParcel = () => {
             blockHash: {
                 type: "keyword"
             },
-            sender: {
+            signer: {
                 type: "keyword"
             },
             timestamp: {

@@ -57,7 +57,7 @@ export class QueryPendingParcel implements BaseAction {
             query = [
                 { term: { status: "pending" } },
                 { terms: { "parcel.action.action": actionFilters } },
-                { term: { "parcel.sender": signerFilter } }
+                { term: { "parcel.signer": signerFilter } }
             ];
         } else {
             query = [{ term: { status: "pending" } }, { terms: { "parcel.action.action": actionFilters } }];
@@ -84,7 +84,7 @@ export class QueryPendingParcel implements BaseAction {
             query = [
                 { term: { status: "pending" } },
                 { terms: { "parcel.action.action": actionFilters } },
-                { term: { "parcel.sender": signerFilter } }
+                { term: { "parcel.signer": signerFilter } }
             ];
         } else {
             query = [{ term: { status: "pending" } }, { terms: { "parcel.action.action": actionFilters } }];
