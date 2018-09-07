@@ -94,7 +94,7 @@ CodeChain ES provides a collection of wrapper classes for accessing the elastics
 - Utile
   - TypeConverter
   - Type
-    - isChangeShardStateDoc
+    - isAssetTransactionGroupDoc
     - isPaymentDoc
     - isSetRegularKeyDoc
     - isCreateShardDoc

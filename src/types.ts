@@ -35,9 +35,9 @@ export interface ParcelDoc {
     isRetracted: boolean;
 }
 
-export type ActionDoc = ChangeShardStateDoc | PaymentDoc | SetRegularKeyDoc | CreateShardDoc;
+export type ActionDoc = AssetTransactionGroupDoc | PaymentDoc | SetRegularKeyDoc | CreateShardDoc;
 
-export interface ChangeShardStateDoc {
+export interface AssetTransactionGroupDoc {
     action: string;
     transactions: TransactionDoc[];
 }

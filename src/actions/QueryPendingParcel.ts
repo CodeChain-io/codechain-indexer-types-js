@@ -5,7 +5,7 @@ import { ElasticSearchAgent } from "..";
 import {
     AssetMintTransactionDoc,
     AssetSchemeDoc,
-    ChangeShardStateDoc,
+    AssetTransactionGroupDoc,
     PendingParcelDoc,
     PendingTransactionDoc,
     TransactionDoc
@@ -139,8 +139,8 @@ export class QueryPendingParcel implements BaseAction {
         const transactionDoc = _.chain(response.hits.hits)
             .flatMap(hit => hit._source as PendingParcelDoc)
             .map(PendingParcel => PendingParcel.parcel)
-            .filter(parcel => Type.isChangeShardStateDoc(parcel.action))
-            .flatMap(parcel => (parcel.action as ChangeShardStateDoc).transactions)
+            .filter(parcel => Type.isAssetTransactionGroupDoc(parcel.action))
+            .flatMap(parcel => (parcel.action as AssetTransactionGroupDoc).transactions)
             .filter((transaction: TransactionDoc) => transaction.data.hash === hash.value)
             .value();
         return {
@@ -172,8 +172,8 @@ export class QueryPendingParcel implements BaseAction {
         const transactionDoc = _.chain(response.hits.hits)
             .flatMap(hit => hit._source as PendingParcelDoc)
             .map(PendingParcel => PendingParcel.parcel)
-            .filter(parcel => Type.isChangeShardStateDoc(parcel.action))
-            .flatMap(parcel => (parcel.action as ChangeShardStateDoc).transactions)
+            .filter(parcel => Type.isAssetTransactionGroupDoc(parcel.action))
+            .flatMap(parcel => (parcel.action as AssetTransactionGroupDoc).transactions)
             .filter(transaction => Type.isAssetMintTransactionDoc(transaction))
             .filter((transaction: AssetMintTransactionDoc) => transaction.data.output.assetType === assetType.value)
             .value();

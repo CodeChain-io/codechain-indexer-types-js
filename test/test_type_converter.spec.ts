@@ -21,7 +21,7 @@ const blockJson = {
             fee: "10",
             networkId: "tc",
             action: {
-                action: "changeShardState",
+                action: "assetTransactionGroup",
                 transactions: [
                     {
                         type: "assetMint",
@@ -303,7 +303,6 @@ describe("type-converter", () => {
 
     test("from block", async () => {
         const blockDoc = await typeConverter.fromBlock(Block.fromJSON(blockJson), 50);
-        expect(blockDoc).toBeInstanceOf("BlockDoc");
         expect(blockDoc.number).toBe(1);
     });
 });

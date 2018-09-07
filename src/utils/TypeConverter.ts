@@ -6,11 +6,11 @@ import {
     Action,
     AssetMintTransaction,
     AssetScheme,
+    AssetTransactionGroup,
     AssetTransferInput,
     AssetTransferOutput,
     AssetTransferTransaction,
     Block,
-    ChangeShardState,
     CreateShard,
     H256,
     Invoice,
@@ -20,7 +20,7 @@ import {
     Transaction,
     U256
 } from "codechain-sdk/lib/core/classes";
-import { AssetTransferAddress, PlatformAddress } from "codechain-sdk/lib/key/classes";
+import { AssetTransferAddress } from "codechain-sdk/lib/key/classes";
 import * as _ from "lodash";
 import {
     ActionDoc,
@@ -56,8 +56,8 @@ export class TypeConverter {
         if (!transaction) {
             const pendingParcels = await this.sdk.rpc.chain.getPendingParcels();
             const pendingTransactions = _.chain(pendingParcels)
-                .filter(parcel => parcel.unsigned.action instanceof ChangeShardState)
-                .flatMap(parcel => (parcel.unsigned.action as ChangeShardState).transactions)
+                .filter(parcel => parcel.unsigned.action instanceof AssetTransactionGroup)
+                .flatMap(parcel => (parcel.unsigned.action as AssetTransactionGroup).transactions)
                 .value();
             transaction = _.find(
                 pendingTransactions,
@@ -210,7 +210,7 @@ export class TypeConverter {
     };
 
     public fromAction = async (action: Action, timestamp: number, parcel: SignedParcel): Promise<ActionDoc> => {
-        if (action instanceof ChangeShardState) {
+        if (action instanceof AssetTransactionGroup) {
             const actionJson = action.toJSON();
             const transactionDocs = await Promise.all(
                 _.map(action.transactions, (transaction, i) => this.fromTransaction(transaction, timestamp, parcel, i))
@@ -254,7 +254,8 @@ export class TypeConverter {
         const action = await this.fromAction(parcel.unsigned.action, timestamp, parcel);
         let owner = await this.sdk.rpc.chain.getRegularKeyOwner(parcel.getSignerPublic());
         if (!owner) {
-            owner = PlatformAddress.fromPublic(parcel.getSignerPublic());
+            // FIXME: Importing PlatformAddress class by from syntax always returns undefined.
+            owner = this.sdk.key.classes.PlatformAddress.fromPublic(parcel.getSignerPublic());
         }
 
         return {
@@ -270,7 +271,9 @@ export class TypeConverter {
             action,
             timestamp,
             countOfTransaction:
-                parcel.unsigned.action instanceof ChangeShardState ? parcel.unsigned.action.transactions.length : 0,
+                parcel.unsigned.action instanceof AssetTransactionGroup
+                    ? parcel.unsigned.action.transactions.length
+                    : 0,
             isRetracted: false
         };
     };
@@ -328,8 +331,8 @@ export class TypeConverter {
         }
         const pendingParcels = await this.sdk.rpc.chain.getPendingParcels();
         const pendingMintTransactions = _.chain(pendingParcels)
-            .filter(parcel => parcel.unsigned.action instanceof ChangeShardState)
-            .flatMap(parcel => (parcel.unsigned.action as ChangeShardState).transactions)
+            .filter(parcel => parcel.unsigned.action instanceof AssetTransactionGroup)
+            .flatMap(parcel => (parcel.unsigned.action as AssetTransactionGroup).transactions)
             .filter(transaction => transaction instanceof AssetMintTransaction)
             .map(tx => tx as AssetMintTransaction)
             .value();

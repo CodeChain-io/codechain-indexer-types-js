@@ -3,14 +3,14 @@ import {
     ActionDoc,
     AssetMintTransactionDoc,
     AssetSchemeDoc,
+    AssetTransactionGroupDoc,
     BlockDoc,
-    ChangeShardStateDoc,
     ParcelDoc,
     TransactionDoc
 } from "./types";
 
-function isChangeShardStateDoc(action: ActionDoc) {
-    return action.action === "changeShardState";
+function isAssetTransactionGroupDoc(action: ActionDoc) {
+    return action.action === "assetTransactionGroup";
 }
 
 function isPaymentDoc(action: ActionDoc) {
@@ -49,15 +49,15 @@ function isH256String(data: string) {
 
 function getTransactionsByBlock(blockDoc: BlockDoc): TransactionDoc[] {
     return _.chain(blockDoc.parcels)
-        .filter((parcel: ParcelDoc) => isChangeShardStateDoc(parcel.action))
-        .flatMap((parcel: ParcelDoc) => (parcel.action as ChangeShardStateDoc).transactions)
+        .filter((parcel: ParcelDoc) => isAssetTransactionGroupDoc(parcel.action))
+        .flatMap((parcel: ParcelDoc) => (parcel.action as AssetTransactionGroupDoc).transactions)
         .value();
 }
 
 function getMintTransactionsByParcel(parcelDoc: ParcelDoc): AssetMintTransactionDoc[] {
-    if (isChangeShardStateDoc(parcelDoc.action)) {
-        const changeShardStateAction = parcelDoc.action as ChangeShardStateDoc;
-        return _.filter(changeShardStateAction.transactions, (tx: TransactionDoc) =>
+    if (isAssetTransactionGroupDoc(parcelDoc.action)) {
+        const assetTransactionGroupAction = parcelDoc.action as AssetTransactionGroupDoc;
+        return _.filter(assetTransactionGroupAction.transactions, (tx: TransactionDoc) =>
             Type.isAssetMintTransactionDoc(tx)
         ) as AssetMintTransactionDoc[];
     }
@@ -81,7 +81,7 @@ const getMetadata = (data: string): MetadataFormat => {
 
 export { TypeConverter } from "./utils/TypeConverter";
 export let Type = {
-    isChangeShardStateDoc,
+    isAssetTransactionGroupDoc,
     isPaymentDoc,
     isSetRegularKeyDoc,
     isCreateShardDoc,
