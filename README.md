@@ -1,4 +1,4 @@
-# CodeChain ES [![npm version](https://badge.fury.io/js/codechain-es.svg)](https://badge.fury.io/js/codechain-es)
+# CodeChain ES [![npm version](https://badge.fury.io/js/codechain-es.svg)](https://badge.fury.io/js/codechain-es) [![Build Status](https://travis-ci.org/CodeChain-io/codechain-es.svg?branch=master)](https://travis-ci.org/CodeChain-io/codechain-es)
 
 CodeChain ES provides a collection of wrapper classes for accessing the elasticsearch index of CodeChain.
 
