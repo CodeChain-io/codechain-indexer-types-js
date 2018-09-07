@@ -29,7 +29,9 @@ export class QueryImage implements BaseAction {
             index: "image_blob",
             type: "_doc",
             id: assetType.value,
-            body: imageBlob,
+            body: {
+                blob: imageBlob
+            },
             refresh: "true"
         });
     }
