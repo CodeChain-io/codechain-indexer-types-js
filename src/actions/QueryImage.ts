@@ -1,5 +1,5 @@
 import { H256 } from "codechain-sdk/lib/core/classes";
-import { Client, SearchResponse } from "elasticsearch";
+import { Client, DeleteDocumentResponse, SearchResponse } from "elasticsearch";
 import * as _ from "lodash";
 import { ElasticSearchAgent } from "..";
 import { BaseAction } from "./BaseAction";
@@ -30,6 +30,15 @@ export class QueryImage implements BaseAction {
             type: "_doc",
             id: assetType.value,
             body: imageBlob,
+            refresh: "true"
+        });
+    }
+
+    public async removeImage(assetType: H256): Promise<DeleteDocumentResponse> {
+        return this.client.delete({
+            index: "image_blob",
+            type: "_doc",
+            id: assetType.value,
             refresh: "true"
         });
     }

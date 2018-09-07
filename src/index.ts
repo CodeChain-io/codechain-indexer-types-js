@@ -142,6 +142,7 @@ export class ElasticSearchAgent
     public getAssetImageBlob!: (assetType: H256) => Promise<string | null>;
     public indexImage!: (assetType: H256, imageBlob: string) => Promise<any>;
     public searchImage!: (body: any) => Promise<SearchResponse<any>>;
+    public removeImage!: (assetType: H256) => Promise<DeleteDocumentResponse>;
 
     constructor(host: string) {
         this.client = new Client({
