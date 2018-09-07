@@ -13,7 +13,8 @@
     "lint": "tslint -p . && prettier 'src/**/*.{ts,js,json}' -l",
     "fmt": "tslint -p . --fix && prettier 'src/**/*.{ts,js,json}' --write",
     "build": "tsc -p .",
-    "test": "jest --env node"
+    "test": "jest --env node",
+    "prepublish": "yarn run lint && yarn run test && yarn run build"
   },
   "keywords": [
     "CodeChain"
