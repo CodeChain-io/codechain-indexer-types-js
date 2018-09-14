@@ -40,9 +40,11 @@ export class TypeConverter {
         "41a872156efc1dbd45a85b49896e9349a4e8f3fb1b8f3ed38d5e13ef675bcd5a"
     ];
     private sdk: SDK;
+    private networkId: string;
 
-    public constructor(codechainHost: string) {
-        this.sdk = new SDK({ server: codechainHost });
+    public constructor(codechainHost: string, networkId: string = "tc") {
+        this.sdk = new SDK({ server: codechainHost, options: { networkId } });
+        this.networkId = networkId;
     }
 
     public fromAssetTransferInput = async (assetTransferInput: AssetTransferInput): Promise<AssetTransferInputDoc> => {
@@ -69,10 +71,15 @@ export class TypeConverter {
         if (transaction instanceof AssetMintTransaction) {
             if (_.includes(this.STANDARD_SCRIPT_LIST, transaction.output.lockScriptHash.value)) {
                 owner = AssetTransferAddress.fromPublicKeyHash(
-                    new H256(Buffer.from(transaction.output.parameters[0]).toString("hex"))
+                    new H256(Buffer.from(transaction.output.parameters[0]).toString("hex")),
+                    {
+                        networkId: this.networkId
+                    }
                 ).value;
             } else if (transaction.output.parameters.length === 0) {
-                owner = AssetTransferAddress.fromLockScriptHash(transaction.output.lockScriptHash).value;
+                owner = AssetTransferAddress.fromLockScriptHash(transaction.output.lockScriptHash, {
+                    networkId: this.networkId
+                }).value;
             }
         } else if (transaction instanceof AssetTransferTransaction) {
             if (
@@ -84,11 +91,17 @@ export class TypeConverter {
                 owner = AssetTransferAddress.fromPublicKeyHash(
                     new H256(
                         Buffer.from(transaction.outputs[assetTransferInput.prevOut.index].parameters[0]).toString("hex")
-                    )
+                    ),
+                    {
+                        networkId: this.networkId
+                    }
                 ).value;
             } else if (transaction.outputs[assetTransferInput.prevOut.index].parameters.length === 0) {
                 owner = AssetTransferAddress.fromLockScriptHash(
-                    transaction.outputs[assetTransferInput.prevOut.index].lockScriptHash
+                    transaction.outputs[assetTransferInput.prevOut.index].lockScriptHash,
+                    {
+                        networkId: this.networkId
+                    }
                 ).value;
             }
         } else {
@@ -115,10 +128,15 @@ export class TypeConverter {
         let owner = "";
         if (_.includes(this.STANDARD_SCRIPT_LIST, assetTransferOutput.lockScriptHash.value)) {
             owner = AssetTransferAddress.fromPublicKeyHash(
-                new H256(Buffer.from(assetTransferOutput.parameters[0]).toString("hex"))
+                new H256(Buffer.from(assetTransferOutput.parameters[0]).toString("hex")),
+                {
+                    networkId: this.networkId
+                }
             ).value;
         } else if (assetTransferOutput.parameters.length === 0) {
-            owner = AssetTransferAddress.fromLockScriptHash(assetTransferOutput.lockScriptHash).value;
+            owner = AssetTransferAddress.fromLockScriptHash(assetTransferOutput.lockScriptHash, {
+                networkId: this.networkId
+            }).value;
         }
 
         return {
@@ -151,7 +169,10 @@ export class TypeConverter {
                         assetType: transaction.getAssetSchemeAddress().value,
                         owner: _.includes(this.STANDARD_SCRIPT_LIST, transaction.output.lockScriptHash.value)
                             ? AssetTransferAddress.fromPublicKeyHash(
-                                  new H256(Buffer.from(transaction.output.parameters[0]).toString("hex"))
+                                  new H256(Buffer.from(transaction.output.parameters[0]).toString("hex")),
+                                  {
+                                      networkId: this.networkId
+                                  }
                               ).value
                             : ""
                     },
@@ -255,7 +276,9 @@ export class TypeConverter {
         let owner = await this.sdk.rpc.chain.getRegularKeyOwner(parcel.getSignerPublic());
         if (!owner) {
             // FIXME: Importing PlatformAddress class by from syntax always returns undefined.
-            owner = this.sdk.key.classes.PlatformAddress.fromPublic(parcel.getSignerPublic());
+            owner = this.sdk.key.classes.PlatformAddress.fromPublic(parcel.getSignerPublic(), {
+                networkId: this.networkId
+            });
         }
 
         return {
