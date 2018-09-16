@@ -76,14 +76,14 @@ export class QueryBlock implements BaseAction {
         });
     }
 
-    public async getBlocks(page: number = 1, itemsPerPage: number = 25): Promise<BlockDoc[]> {
+    public async getBlocks(lastBlockNumber: number = Number.MAX_VALUE, itemsPerPage: number = 25): Promise<BlockDoc[]> {
         return this.searchBlock({
             sort: [
                 {
                     number: { order: "desc" }
                 }
             ],
-            from: (page - 1) * itemsPerPage,
+            search_after: [lastBlockNumber],
             size: itemsPerPage,
             query: {
                 bool: {

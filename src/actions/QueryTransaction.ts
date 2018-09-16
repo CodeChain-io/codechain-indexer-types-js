@@ -31,14 +31,19 @@ export class QueryTransaction implements BaseAction {
         return response.hits.hits[0]._source;
     }
 
-    public async getTransactions(page: number = 1, itemsPerPage: number = 25): Promise<TransactionDoc[]> {
+    public async getTransactions(
+        lastBlockNumber: number = Number.MAX_VALUE,
+        lastParcelIndex: number = Number.MAX_VALUE,
+        lastTransactionIndex: number = Number.MAX_VALUE,
+        itemsPerPage: number = 25
+    ): Promise<TransactionDoc[]> {
         const response = await this.searchTransaction({
             sort: [
                 { "data.blockNumber": { order: "desc" } },
                 { "data.parcelIndex": { order: "desc" } },
                 { "data.transactionIndex": { order: "desc" } }
             ],
-            from: (page - 1) * itemsPerPage,
+            search_after: [lastBlockNumber, lastParcelIndex, lastTransactionIndex],
             size: itemsPerPage,
             query: {
                 bool: {

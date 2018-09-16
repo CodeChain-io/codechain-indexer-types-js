@@ -24,10 +24,14 @@ export class QueryParcel implements BaseAction {
         return response.hits.hits[0]._source;
     }
 
-    public async getParcels(page: number = 1, itemsPerPage: number = 25): Promise<ParcelDoc[]> {
+    public async getParcels(
+        lastBlockNumber: number = Number.MAX_VALUE,
+        lastParcelIndex: number = Number.MAX_VALUE,
+        itemsPerPage: number = 25
+    ): Promise<ParcelDoc[]> {
         const response = await this.searchParcel({
             sort: [{ blockNumber: { order: "desc" } }, { parcelIndex: { order: "desc" } }],
-            from: (page - 1) * itemsPerPage,
+            search_after: [lastBlockNumber, lastParcelIndex],
             size: itemsPerPage,
             query: {
                 bool: {

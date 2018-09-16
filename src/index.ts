@@ -36,7 +36,7 @@ export class ElasticSearchAgent
     public getBlockByHash!: (hash: H256) => Promise<BlockDoc | null>;
     public getLastBlockNumber!: () => Promise<number>;
     public getBlock!: (blockNumber: number) => Promise<BlockDoc | null>;
-    public getBlocks!: (page?: number, itemsPerPage?: number) => Promise<BlockDoc[]>;
+    public getBlocks!: (lastBlockNumber?: number, itemsPerPage?: number) => Promise<BlockDoc[]>;
     public getTotalBlockCount!: () => Promise<number>;
     public getBlocksByPlatformAddress!: (address: string, page?: number, itemsPerPage?: number) => Promise<BlockDoc[]>;
     public retractBlock!: (blockHash: H256) => Promise<void>;
@@ -47,7 +47,11 @@ export class ElasticSearchAgent
     public countParcel!: (body: any) => Promise<CountResponse>;
     public countTransaction!: (body: any) => Promise<CountResponse>;
     public getParcel!: (hash: H256) => Promise<ParcelDoc | null>;
-    public getParcels!: (page?: number, itemsPerPage?: number) => Promise<ParcelDoc[]>;
+    public getParcels!: (
+        lastBlockNumber?: number,
+        lastParcelIndex?: number,
+        itemsPerPage?: number
+    ) => Promise<ParcelDoc[]>;
     public getParcelsByPlatformAddress!: (
         address: string,
         page?: number,
@@ -58,7 +62,12 @@ export class ElasticSearchAgent
     public indexParcel!: (parcelDoc: ParcelDoc) => Promise<any>;
     public updateParcel!: (hash: H256, partial: any) => Promise<any>;
     public getTransaction!: (hash: H256) => Promise<AssetMintTransactionDoc | AssetTransferTransactionDoc | null>;
-    public getTransactions!: (page?: number, itemsPerPage?: number) => Promise<TransactionDoc[]>;
+    public getTransactions!: (
+        lastBlockNumber?: number,
+        lastParcelIndex?: number,
+        lastTransactionIndex?: number,
+        itemsPerPage?: number
+    ) => Promise<TransactionDoc[]>;
     public getTransactionsByAssetType!: (
         assetType: H256,
         page?: number,
