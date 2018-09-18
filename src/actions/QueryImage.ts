@@ -31,8 +31,7 @@ export class QueryImage implements BaseAction {
             id: assetType.value,
             body: {
                 blob: imageBlob
-            },
-            refresh: "true"
+            }
         });
     }
 
@@ -40,8 +39,7 @@ export class QueryImage implements BaseAction {
         return this.client.delete({
             index: "image_blob",
             type: "_doc",
-            id: assetType.value,
-            refresh: "true"
+            id: assetType.value
         });
     }
 

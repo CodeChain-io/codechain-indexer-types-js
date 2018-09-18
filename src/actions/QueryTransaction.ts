@@ -412,8 +412,7 @@ export class QueryTransaction implements BaseAction {
             index: "transaction",
             type: "_doc",
             id: transactionDoc.data.hash,
-            body: transactionDoc,
-            refresh: "true"
+            body: transactionDoc
         });
     }
 
@@ -422,7 +421,6 @@ export class QueryTransaction implements BaseAction {
             index: "transaction",
             type: "_doc",
             id: hash.value,
-            refresh: "true",
             body: {
                 doc: partial
             }

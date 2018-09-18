@@ -111,8 +111,7 @@ export class QueryParcel implements BaseAction {
             index: "parcel",
             type: "_doc",
             id: parcelDoc.hash,
-            body: parcelDoc,
-            refresh: "true"
+            body: parcelDoc
         });
     }
 
@@ -121,7 +120,6 @@ export class QueryParcel implements BaseAction {
             index: "parcel",
             type: "_doc",
             id: hash.value,
-            refresh: "true",
             body: {
                 doc: partial
             }

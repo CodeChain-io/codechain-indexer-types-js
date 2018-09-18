@@ -207,7 +207,6 @@ export class QueryPendingParcel implements BaseAction {
             index: "pending_parcel",
             type: "_doc",
             id: hash.value,
-            refresh: "true",
             body: {
                 doc: {
                     status: "dead"
@@ -220,8 +219,7 @@ export class QueryPendingParcel implements BaseAction {
         return this.client.delete({
             index: "pending_parcel",
             type: "_doc",
-            id: hash.value,
-            refresh: "true"
+            id: hash.value
         });
     }
 
@@ -230,8 +228,7 @@ export class QueryPendingParcel implements BaseAction {
             index: "pending_parcel",
             type: "_doc",
             id: pendingParcelDoc.parcel.hash,
-            body: pendingParcelDoc,
-            refresh: "true"
+            body: pendingParcelDoc
         });
     }
 
@@ -240,7 +237,6 @@ export class QueryPendingParcel implements BaseAction {
             index: "pending_parcel",
             type: "_doc",
             id: hash.value,
-            refresh: "true",
             body: {
                 doc: {
                     status: "pending"
