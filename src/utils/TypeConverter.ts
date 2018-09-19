@@ -104,8 +104,6 @@ export class TypeConverter {
                     }
                 ).value;
             }
-        } else {
-            throw new Error("Unexpected transaction");
         }
         return {
             prevOut: {
