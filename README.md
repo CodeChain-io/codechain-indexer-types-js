@@ -82,10 +82,7 @@ CodeChain ES provides a collection of wrapper classes for accessing the elastics
     - updateLog
     - getLog
   - Account
-    - increaseBalance
-    - decreaseBalance
     - getAccounts
-    - indexAccount
     - updateAccount
     - getAccount
 

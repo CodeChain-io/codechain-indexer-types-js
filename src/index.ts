@@ -141,9 +141,6 @@ export class ElasticSearchAgent
     public indexLog!: (date: string, logType: LogType, count: number, value?: string | undefined) => Promise<any>;
     public updateLog!: (logData: LogData, doc: any) => Promise<void>;
     public getLog!: (date: string, logType: LogType, value?: string | undefined) => Promise<LogData | null>;
-    public increaseBalance!: (address: string, balance: string) => Promise<void>;
-    public decreaseBalance!: (address: string, balance: string) => Promise<void>;
-    public indexAccount!: (address: string, balance: string) => Promise<any>;
     public updateAccount!: (address: string, balance: string) => Promise<void>;
     public getAccount!: (address: string) => Promise<Account | null>;
     public getAccounts!: () => Promise<Account[]>;

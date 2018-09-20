@@ -1,4 +1,3 @@
-import { BigNumber } from "bignumber.js";
 import { Client } from "elasticsearch";
 import * as _ from "lodash";
 import { ElasticSearchAgent } from "..";
@@ -16,30 +15,6 @@ interface AccountData {
 export class QueryAccount implements BaseAction {
     public agent!: ElasticSearchAgent;
     public client!: Client;
-
-    public async increaseBalance(address: string, balance: string): Promise<void> {
-        const account = await this.getAccount(address);
-        if (account) {
-            await this.updateAccount(
-                account.address,
-                new BigNumber(account.balance).plus(new BigNumber(balance)).toString(10)
-            );
-        } else {
-            await this.indexAccount(address, balance);
-        }
-    }
-
-    public async decreaseBalance(address: string, balance: string): Promise<void> {
-        const account = await this.getAccount(address);
-        if (account && new BigNumber(account.balance).isGreaterThanOrEqualTo(new BigNumber(balance))) {
-            await this.updateAccount(
-                account.address,
-                new BigNumber(account.balance).minus(new BigNumber(balance)).toString(10)
-            );
-        } else {
-            throw new Error(`Invalid decreasing balance action => ${address}`);
-        }
-    }
 
     public async getAccounts(): Promise<Account[]> {
         const response = await this.client.search<AccountData>({
@@ -60,18 +35,6 @@ export class QueryAccount implements BaseAction {
         });
     }
 
-    public async indexAccount(address: string, balance: string): Promise<any> {
-        return this.client.index({
-            index: "account",
-            type: "_doc",
-            id: address,
-            body: {
-                balance
-            },
-            refresh: "true"
-        });
-    }
-
     public async updateAccount(address: string, balance: string): Promise<void> {
         return this.client.update({
             index: "account",
@@ -80,9 +43,9 @@ export class QueryAccount implements BaseAction {
             body: {
                 doc: {
                     balance
-                }
-            },
-            refresh: "true"
+                },
+                doc_as_upsert: true
+            }
         });
     }
 
