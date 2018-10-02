@@ -108,7 +108,7 @@ export class QueryAsset implements BaseAction {
                                 {
                                     type: {
                                         terms: {
-                                            field: "asset.assetType.keyword"
+                                            field: "asset.assetType"
                                         }
                                     }
                                 }
