@@ -154,13 +154,13 @@ export class QueryAsset implements BaseAction {
     public async removeAsset(
         address: string,
         assetType: H256,
-        transactionHash: number,
+        transactionHash: H256,
         transactionOutputIndex: number
     ): Promise<DeleteDocumentResponse> {
         return this.client.delete({
             index: "asset",
             type: "_doc",
-            id: `${address}-${assetType}-${transactionHash}-${transactionOutputIndex}`
+            id: `${address}-${assetType}-${transactionHash.value}-${transactionOutputIndex}`
         });
     }
 }

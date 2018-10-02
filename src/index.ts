@@ -170,7 +170,7 @@ export class ElasticSearchAgent
     public removeAsset!: (
         address: string,
         assetType: H256,
-        transactionHash: number,
+        transactionHash: H256,
         transactionOutputIndex: number
     ) => Promise<DeleteDocumentResponse>;
     constructor(host: string) {
