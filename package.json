@@ -1,6 +1,6 @@
 {
   "name": "codechain-es",
-  "version": "0.1.0-alpha.10",
+  "version": "0.1.0-alpha.11",
   "description": "CodeChain ES provides a collection of wrapper classes for accessing the elasticsearch index of CodeChain.",
   "repository": "https://github.com/CodeChain-io/codechain-es",
   "dependencies": {
