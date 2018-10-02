@@ -148,7 +148,7 @@ export interface AssetTransferInputDoc {
         amount: number;
         /* custom field for indexing */
         owner: string;
-        lockscriptHash: string;
+        lockScriptHash: string;
         parameters: Buffer[];
     };
     lockScript: Buffer;
