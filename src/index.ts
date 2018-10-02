@@ -172,7 +172,7 @@ export class ElasticSearchAgent
         assetType: H256,
         transactionHash: H256,
         transactionOutputIndex: number,
-        isRetracted: boolean
+        isRemoved: boolean
     ) => Promise<DeleteDocumentResponse>;
     constructor(host: string) {
         this.client = new Client({
