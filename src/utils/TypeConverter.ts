@@ -68,15 +68,18 @@ export class TypeConverter {
 
         let owner = "";
         let lockscriptHash = "";
+        let parameters: Buffer[] = [];
         if (transaction instanceof AssetMintTransaction) {
             owner = this.getOwner(transaction.output.lockScriptHash, transaction.output.parameters);
             lockscriptHash = transaction.output.lockScriptHash.value;
+            parameters = transaction.output.parameters;
         } else if (transaction instanceof AssetTransferTransaction) {
             owner = this.getOwner(
                 transaction.outputs[assetTransferInput.prevOut.index].lockScriptHash,
                 transaction.outputs[assetTransferInput.prevOut.index].parameters
             );
             lockscriptHash = transaction.outputs[assetTransferInput.prevOut.index].lockScriptHash.value;
+            parameters = transaction.outputs[assetTransferInput.prevOut.index].parameters;
         }
         return {
             prevOut: {
@@ -86,7 +89,8 @@ export class TypeConverter {
                 assetScheme,
                 amount: assetTransferInput.prevOut.amount,
                 owner,
-                lockscriptHash
+                lockscriptHash,
+                parameters
             },
             lockScript: Buffer.from(assetTransferInput.lockScript),
             unlockScript: Buffer.from(assetTransferInput.unlockScript)

@@ -78,6 +78,19 @@ export const getMappingTransaction = () => {
                                     },
                                     transactionHash: {
                                         type: "keyword"
+                                    },
+                                    lockScriptHash: {
+                                        type: "keyword"
+                                    },
+                                    parameters: {
+                                        properties: {
+                                            data: {
+                                                type: "long"
+                                            },
+                                            type: {
+                                                type: "keyword"
+                                            }
+                                        }
                                     }
                                 }
                             }
