@@ -167,12 +167,17 @@ export class ElasticSearchAgent
         parcelIndex: number,
         transactionIndex: number
     ) => Promise<void>;
-    public updateAssetState!: (
+    public revivalAsset!: (
         address: string,
         assetType: H256,
         transactionHash: H256,
-        transactionOutputIndex: number,
-        isRemoved: boolean
+        transactionOutputIndex: number
+    ) => Promise<DeleteDocumentResponse>;
+    public removeAsset!: (
+        address: string,
+        assetType: H256,
+        transactionHash: H256,
+        transactionOutputIndex: number
     ) => Promise<DeleteDocumentResponse>;
     constructor(host: string) {
         this.client = new Client({

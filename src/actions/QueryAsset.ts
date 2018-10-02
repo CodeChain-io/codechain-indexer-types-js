@@ -171,12 +171,11 @@ export class QueryAsset implements BaseAction {
         });
     }
 
-    public async updateAssetState(
+    public async removeAsset(
         address: string,
         assetType: H256,
         transactionHash: H256,
-        transactionOutputIndex: number,
-        isRemoved: boolean
+        transactionOutputIndex: number
     ): Promise<DeleteDocumentResponse> {
         return this.client.update({
             index: "asset",
@@ -184,7 +183,25 @@ export class QueryAsset implements BaseAction {
             id: `${address}-${assetType}-${transactionHash.value}-${transactionOutputIndex}`,
             body: {
                 doc: {
-                    isRemoved
+                    isRemoved: true
+                }
+            }
+        });
+    }
+
+    public async revivalAsset(
+        address: string,
+        assetType: H256,
+        transactionHash: H256,
+        transactionOutputIndex: number
+    ): Promise<DeleteDocumentResponse> {
+        return this.client.update({
+            index: "asset",
+            type: "_doc",
+            id: `${address}-${assetType}-${transactionHash.value}-${transactionOutputIndex}`,
+            body: {
+                doc: {
+                    isRemoved: false
                 }
             }
         });
