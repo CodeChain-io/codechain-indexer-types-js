@@ -182,7 +182,7 @@ export class QueryAsset implements BaseAction {
         return this.client.update({
             index: "asset",
             type: "_doc",
-            id: `${address}-${assetType}-${transactionHash.value}-${transactionOutputIndex}`,
+            id: `${address}-${assetType.value}-${transactionHash.value}-${transactionOutputIndex}`,
             body: {
                 doc: {
                     isRemoved: true
@@ -201,7 +201,7 @@ export class QueryAsset implements BaseAction {
         return this.client.update({
             index: "asset",
             type: "_doc",
-            id: `${address}-${assetType}-${transactionHash.value}-${transactionOutputIndex}`,
+            id: `${address}-${assetType.value}-${transactionHash.value}-${transactionOutputIndex}`,
             body: {
                 doc: {
                     isRemoved: false
