@@ -168,7 +168,8 @@ export class QueryAsset implements BaseAction {
                     isRemoved: false
                 },
                 doc_as_upsert: true
-            }
+            },
+            refresh: "true"
         });
     }
 
@@ -186,7 +187,8 @@ export class QueryAsset implements BaseAction {
                 doc: {
                     isRemoved: true
                 }
-            }
+            },
+            refresh: "true"
         });
     }
 
@@ -204,7 +206,8 @@ export class QueryAsset implements BaseAction {
                 doc: {
                     isRemoved: false
                 }
-            }
+            },
+            refresh: "true"
         });
     }
 }
