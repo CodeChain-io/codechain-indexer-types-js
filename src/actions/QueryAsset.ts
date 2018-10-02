@@ -57,6 +57,13 @@ export class QueryAsset implements BaseAction {
                                         value: assetType
                                     }
                                 }
+                            },
+                            {
+                                term: {
+                                    isRetracted: {
+                                        value: false
+                                    }
+                                }
                             }
                         ]
                     }
@@ -74,10 +81,23 @@ export class QueryAsset implements BaseAction {
             type: "_doc",
             body: {
                 query: {
-                    term: {
-                        address: {
-                            value: address
-                        }
+                    bool: {
+                        must: [
+                            {
+                                term: {
+                                    address: {
+                                        value: address
+                                    }
+                                }
+                            },
+                            {
+                                term: {
+                                    isRetracted: {
+                                        value: false
+                                    }
+                                }
+                            }
+                        ]
                     }
                 },
                 size: 0,
@@ -151,16 +171,22 @@ export class QueryAsset implements BaseAction {
         });
     }
 
-    public async removeAsset(
+    public async updateAssetState(
         address: string,
         assetType: H256,
         transactionHash: H256,
-        transactionOutputIndex: number
+        transactionOutputIndex: number,
+        isRetracted: boolean
     ): Promise<DeleteDocumentResponse> {
-        return this.client.delete({
+        return this.client.update({
             index: "asset",
             type: "_doc",
-            id: `${address}-${assetType}-${transactionHash.value}-${transactionOutputIndex}`
+            id: `${address}-${assetType}-${transactionHash.value}-${transactionOutputIndex}`,
+            body: {
+                doc: {
+                    isRetracted
+                }
+            }
         });
     }
 }

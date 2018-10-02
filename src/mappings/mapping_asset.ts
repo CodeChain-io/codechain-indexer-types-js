@@ -41,6 +41,9 @@ export const getAssetMapping = () => {
             },
             transactionIndex: {
                 type: "long"
+            },
+            isRetracted: {
+                type: "boolean"
             }
         }
     };
