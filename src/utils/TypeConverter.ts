@@ -7,6 +7,7 @@ import {
     AssetMintTransaction,
     AssetScheme,
     AssetTransactionGroup,
+    AssetTransferAddress,
     AssetTransferInput,
     AssetTransferOutput,
     AssetTransferTransaction,
@@ -15,12 +16,12 @@ import {
     H256,
     Invoice,
     Payment,
+    PlatformAddress,
     SetRegularKey,
     SignedParcel,
     Transaction,
     U256
 } from "codechain-sdk/lib/core/classes";
-import { AssetTransferAddress } from "codechain-sdk/lib/key/classes";
 import * as _ from "lodash";
 import {
     ActionDoc,
@@ -35,10 +36,8 @@ import {
 import { Type } from "../utils";
 
 export class TypeConverter {
-    private STANDARD_SCRIPT_LIST = [
-        "f42a65ea518ba236c08b261c34af0521fa3cd1aa505e1c18980919cb8945f8f3",
-        "41a872156efc1dbd45a85b49896e9349a4e8f3fb1b8f3ed38d5e13ef675bcd5a"
-    ];
+    private P2PKH = "f42a65ea518ba236c08b261c34af0521fa3cd1aa505e1c18980919cb8945f8f3";
+    private P2PKHBURN = "41a872156efc1dbd45a85b49896e9349a4e8f3fb1b8f3ed38d5e13ef675bcd5a";
     private sdk: SDK;
     private networkId: string;
 
@@ -69,41 +68,12 @@ export class TypeConverter {
 
         let owner = "";
         if (transaction instanceof AssetMintTransaction) {
-            if (_.includes(this.STANDARD_SCRIPT_LIST, transaction.output.lockScriptHash.value)) {
-                owner = AssetTransferAddress.fromPublicKeyHash(
-                    new H256(Buffer.from(transaction.output.parameters[0]).toString("hex")),
-                    {
-                        networkId: this.networkId
-                    }
-                ).value;
-            } else if (transaction.output.parameters.length === 0) {
-                owner = AssetTransferAddress.fromLockScriptHash(transaction.output.lockScriptHash, {
-                    networkId: this.networkId
-                }).value;
-            }
+            owner = this.getOwner(transaction.output.lockScriptHash, transaction.output.parameters);
         } else if (transaction instanceof AssetTransferTransaction) {
-            if (
-                _.includes(
-                    this.STANDARD_SCRIPT_LIST,
-                    transaction.outputs[assetTransferInput.prevOut.index].lockScriptHash.value
-                )
-            ) {
-                owner = AssetTransferAddress.fromPublicKeyHash(
-                    new H256(
-                        Buffer.from(transaction.outputs[assetTransferInput.prevOut.index].parameters[0]).toString("hex")
-                    ),
-                    {
-                        networkId: this.networkId
-                    }
-                ).value;
-            } else if (transaction.outputs[assetTransferInput.prevOut.index].parameters.length === 0) {
-                owner = AssetTransferAddress.fromLockScriptHash(
-                    transaction.outputs[assetTransferInput.prevOut.index].lockScriptHash,
-                    {
-                        networkId: this.networkId
-                    }
-                ).value;
-            }
+            owner = this.getOwner(
+                transaction.outputs[assetTransferInput.prevOut.index].lockScriptHash,
+                transaction.outputs[assetTransferInput.prevOut.index].parameters
+            );
         }
         return {
             prevOut: {
@@ -123,23 +93,9 @@ export class TypeConverter {
         assetTransferOutput: AssetTransferOutput
     ): Promise<AssetTransferOutputDoc> => {
         const assetScheme = await this.getAssetScheme(assetTransferOutput.assetType);
-        let owner = "";
-        if (_.includes(this.STANDARD_SCRIPT_LIST, assetTransferOutput.lockScriptHash.value)) {
-            owner = AssetTransferAddress.fromPublicKeyHash(
-                new H256(Buffer.from(assetTransferOutput.parameters[0]).toString("hex")),
-                {
-                    networkId: this.networkId
-                }
-            ).value;
-        } else if (assetTransferOutput.parameters.length === 0) {
-            owner = AssetTransferAddress.fromLockScriptHash(assetTransferOutput.lockScriptHash, {
-                networkId: this.networkId
-            }).value;
-        }
-
         return {
             lockScriptHash: assetTransferOutput.lockScriptHash.value,
-            owner,
+            owner: this.getOwner(assetTransferOutput.lockScriptHash, assetTransferOutput.parameters),
             parameters: _.map(assetTransferOutput.parameters, p => Buffer.from(p)),
             assetType: assetTransferOutput.assetType.value,
             assetScheme,
@@ -165,14 +121,7 @@ export class TypeConverter {
                         parameters: _.map(transaction.output.parameters, p => Buffer.from(p)),
                         amount: transaction.output.amount,
                         assetType: transaction.getAssetSchemeAddress().value,
-                        owner: _.includes(this.STANDARD_SCRIPT_LIST, transaction.output.lockScriptHash.value)
-                            ? AssetTransferAddress.fromPublicKeyHash(
-                                  new H256(Buffer.from(transaction.output.parameters[0]).toString("hex")),
-                                  {
-                                      networkId: this.networkId
-                                  }
-                              ).value
-                            : ""
+                        owner: this.getOwner(transaction.output.lockScriptHash, transaction.output.parameters)
                     },
                     networkId: transaction.networkId,
                     metadata: transaction.metadata,
@@ -273,8 +222,7 @@ export class TypeConverter {
         const action = await this.fromAction(parcel.unsigned.action, timestamp, parcel);
         let owner = await this.sdk.rpc.chain.getRegularKeyOwner(parcel.getSignerPublic());
         if (!owner) {
-            // FIXME: Importing PlatformAddress class by from syntax always returns undefined.
-            owner = this.sdk.key.classes.PlatformAddress.fromPublic(parcel.getSignerPublic(), {
+            owner = PlatformAddress.fromPublic(parcel.getSignerPublic(), {
                 networkId: this.networkId
             });
         }
@@ -343,6 +291,24 @@ export class TypeConverter {
             amount: assetScheme.amount,
             networkId: assetScheme.networkId
         };
+    };
+
+    private getOwner = (lockScriptHash: H256, parameters: any) => {
+        let owner = "";
+        if (lockScriptHash.value === this.P2PKH) {
+            owner = AssetTransferAddress.fromTypeAndPayload(1, new H256(Buffer.from(parameters[0]).toString("hex")), {
+                networkId: this.networkId
+            }).value;
+        } else if (lockScriptHash.value === this.P2PKHBURN) {
+            owner = AssetTransferAddress.fromTypeAndPayload(2, new H256(Buffer.from(parameters[0]).toString("hex")), {
+                networkId: this.networkId
+            }).value;
+        } else if (parameters.length === 0) {
+            owner = AssetTransferAddress.fromTypeAndPayload(0, lockScriptHash, {
+                networkId: this.networkId
+            }).value;
+        }
+        return owner;
     };
 
     private getAssetScheme = async (assetType: H256): Promise<AssetSchemeDoc> => {
