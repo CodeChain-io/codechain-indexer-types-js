@@ -167,7 +167,12 @@ export class ElasticSearchAgent
         parcelIndex: number,
         transactionIndex: number
     ) => Promise<void>;
-    public removeAsset!: (address: string, assetDoc: AssetDoc) => Promise<DeleteDocumentResponse>;
+    public removeAsset!: (
+        address: string,
+        assetType: H256,
+        transactionHash: number,
+        transactionOutputIndex: number
+    ) => Promise<DeleteDocumentResponse>;
     constructor(host: string) {
         this.client = new Client({
             host

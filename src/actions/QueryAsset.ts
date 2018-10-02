@@ -151,11 +151,16 @@ export class QueryAsset implements BaseAction {
         });
     }
 
-    public async removeAsset(address: string, assetDoc: AssetDoc): Promise<DeleteDocumentResponse> {
+    public async removeAsset(
+        address: string,
+        assetType: H256,
+        transactionHash: number,
+        transactionOutputIndex: number
+    ): Promise<DeleteDocumentResponse> {
         return this.client.delete({
             index: "asset",
             type: "_doc",
-            id: `${address}-${assetDoc.assetType}-${assetDoc.transactionHash}-${assetDoc.transactionOutputIndex}`
+            id: `${address}-${assetType}-${transactionHash}-${transactionOutputIndex}`
         });
     }
 }
