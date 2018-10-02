@@ -42,7 +42,7 @@ export const getAssetMapping = () => {
             transactionIndex: {
                 type: "long"
             },
-            isRetracted: {
+            isRemoved: {
                 type: "boolean"
             }
         }

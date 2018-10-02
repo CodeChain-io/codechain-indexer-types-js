@@ -60,7 +60,7 @@ export class QueryAsset implements BaseAction {
                             },
                             {
                                 term: {
-                                    isRetracted: {
+                                    isRemoved: {
                                         value: false
                                     }
                                 }
@@ -92,7 +92,7 @@ export class QueryAsset implements BaseAction {
                             },
                             {
                                 term: {
-                                    isRetracted: {
+                                    isRemoved: {
                                         value: false
                                     }
                                 }
@@ -176,7 +176,7 @@ export class QueryAsset implements BaseAction {
         assetType: H256,
         transactionHash: H256,
         transactionOutputIndex: number,
-        isRetracted: boolean
+        isRemoved: boolean
     ): Promise<DeleteDocumentResponse> {
         return this.client.update({
             index: "asset",
@@ -184,7 +184,7 @@ export class QueryAsset implements BaseAction {
             id: `${address}-${assetType}-${transactionHash.value}-${transactionOutputIndex}`,
             body: {
                 doc: {
-                    isRetracted
+                    isRemoved
                 }
             }
         });
