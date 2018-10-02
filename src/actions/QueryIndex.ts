@@ -1,6 +1,7 @@
 import { Client } from "elasticsearch";
 import { ElasticSearchAgent } from "..";
 import { getAccountMapping } from "../mappings/mapping_account";
+import { getAssetMapping } from "../mappings/mapping_asset";
 import { getMappingBlock } from "../mappings/mapping_block";
 import { getMappingImageBlob } from "../mappings/mapping_image_blob";
 import { getMappingLog } from "../mappings/mapping_log";
@@ -34,6 +35,9 @@ export class QueryIndex implements BaseAction {
         });
         const isMappingImageBlobExisted = await this.client.indices.exists({
             index: "image_blob"
+        });
+        const isMappingAssetExisted = await this.client.indices.exists({
+            index: "asset"
         });
         if (!isMappingBlockExisted) {
             await this.client.indices.create({
@@ -103,6 +107,16 @@ export class QueryIndex implements BaseAction {
                 index: "image_blob",
                 type: "_doc",
                 body: getMappingImageBlob()
+            });
+        }
+        if (!isMappingAssetExisted) {
+            await this.client.indices.create({
+                index: "asset"
+            });
+            await this.client.indices.putMapping({
+                index: "asset",
+                type: "_doc",
+                body: getAssetMapping()
             });
         }
     }

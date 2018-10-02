@@ -1,6 +1,7 @@
 import { H256 } from "codechain-sdk/lib/core/classes";
 import { Client, CountResponse, DeleteDocumentResponse, SearchResponse } from "elasticsearch";
 import { Account, QueryAccount } from "./actions/QueryAccount";
+import { QueryAsset, UTXO } from "./actions/QueryAsset";
 import { QueryBlock } from "./actions/QueryBlock";
 import { QueryImage } from "./actions/QueryImage";
 import { QueryIndex } from "./actions/QueryIndex";
@@ -30,7 +31,8 @@ export class ElasticSearchAgent
         QueryIndex,
         QueryLog,
         QueryAccount,
-        QueryImage {
+        QueryImage,
+        QueryAsset {
     public client: Client;
     public agent: ElasticSearchAgent;
     public getBlockByHash!: (hash: H256) => Promise<BlockDoc | null>;
@@ -149,7 +151,23 @@ export class ElasticSearchAgent
     public indexImage!: (assetType: H256, imageBlob: string) => Promise<any>;
     public searchImage!: (body: any) => Promise<SearchResponse<any>>;
     public removeImage!: (assetType: H256) => Promise<DeleteDocumentResponse>;
-
+    public getUTXOByAssetType!: (
+        address: string,
+        assetType: H256,
+        lastBlockNumber?: number,
+        lastParcelIndex?: number,
+        lastTransactionIndex?: number,
+        itemsPerPage?: number
+    ) => Promise<AssetDoc[]>;
+    public getUTXOList!: (address: string, page?: number, itemsPerPage?: number) => Promise<UTXO[]>;
+    public indexAsset!: (
+        address: string,
+        assetDoc: AssetDoc,
+        blockNumber: number,
+        parcelIndex: number,
+        transactionIndex: number
+    ) => Promise<void>;
+    public removeAsset!: (address: string, assetDoc: AssetDoc) => Promise<DeleteDocumentResponse>;
     constructor(host: string) {
         this.client = new Client({
             host
@@ -172,7 +190,8 @@ applyMixins(ElasticSearchAgent, [
     QueryIndex,
     QueryLog,
     QueryAccount,
-    QueryImage
+    QueryImage,
+    QueryAsset
 ]);
 function applyMixins(derivedCtor: any, baseCtors: any[]) {
     baseCtors.forEach(baseCtor => {

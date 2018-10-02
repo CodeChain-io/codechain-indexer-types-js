@@ -85,6 +85,11 @@ CodeChain ES provides a collection of wrapper classes for accessing the elastics
     - getAccounts
     - updateAccount
     - getAccount
+  - Asset
+    - getUTXOByAssetType
+    - getUTXOList
+    - indexAsset
+    - removeAsset
 
 ### Utils
 
