@@ -164,7 +164,8 @@ export class QueryAsset implements BaseAction {
                     asset: assetDoc,
                     blockNumber,
                     parcelIndex,
-                    transactionIndex
+                    transactionIndex,
+                    isRemoved: false
                 },
                 doc_as_upsert: true
             }
