@@ -13,6 +13,7 @@ import {
     AssetTransferTransaction,
     Block,
     CreateShard,
+    H160,
     H256,
     Invoice,
     Payment,
@@ -301,7 +302,7 @@ export class TypeConverter {
         };
     };
 
-    private getOwner = (lockScriptHash: H256, parameters: any) => {
+    private getOwner = (lockScriptHash: H160, parameters: any) => {
         let owner = "";
         if (lockScriptHash.value === this.P2PKH) {
             owner = AssetTransferAddress.fromTypeAndPayload(1, new H256(Buffer.from(parameters[0]).toString("hex")), {
