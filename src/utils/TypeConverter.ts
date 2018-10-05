@@ -305,11 +305,11 @@ export class TypeConverter {
     private getOwner = (lockScriptHash: H160, parameters: any) => {
         let owner = "";
         if (lockScriptHash.value === this.P2PKH) {
-            owner = AssetTransferAddress.fromTypeAndPayload(1, new H256(Buffer.from(parameters[0]).toString("hex")), {
+            owner = AssetTransferAddress.fromTypeAndPayload(1, new H160(Buffer.from(parameters[0]).toString("hex")), {
                 networkId: this.networkId
             }).value;
         } else if (lockScriptHash.value === this.P2PKHBURN) {
-            owner = AssetTransferAddress.fromTypeAndPayload(2, new H256(Buffer.from(parameters[0]).toString("hex")), {
+            owner = AssetTransferAddress.fromTypeAndPayload(2, new H160(Buffer.from(parameters[0]).toString("hex")), {
                 networkId: this.networkId
             }).value;
         } else if (parameters.length === 0) {
