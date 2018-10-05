@@ -37,8 +37,8 @@ import {
 import { Type } from "../utils";
 
 export class TypeConverter {
-    private P2PKH = "f42a65ea518ba236c08b261c34af0521fa3cd1aa505e1c18980919cb8945f8f3";
-    private P2PKHBURN = "41a872156efc1dbd45a85b49896e9349a4e8f3fb1b8f3ed38d5e13ef675bcd5a";
+    private P2PKH = "5f5960a7bca6ceeeb0c97bc717562914e7a1de04";
+    private P2PKHBURN = "37572bdcc22d39a59c0d12d301f6271ba3fdd451";
     private sdk: SDK;
     private networkId: string;
 
