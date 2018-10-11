@@ -79,7 +79,6 @@ const getMetadata = (data: string): MetadataFormat => {
     return {};
 };
 
-export { TypeConverter } from "./utils/TypeConverter";
 export let Type = {
     isAssetTransactionGroupDoc,
     isPaymentDoc,

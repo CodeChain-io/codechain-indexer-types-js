@@ -1,20 +1,18 @@
 {
   "name": "codechain-es",
-  "version": "0.1.1-alpha.5",
-  "description": "CodeChain ES provides a collection of wrapper classes for accessing the elasticsearch index of CodeChain.",
+  "version": "0.2.0-alpha.0",
+  "description": "CodeChain-es-js provides the rich object types of the CodeChain-primitive-js that are indexed by indexer and used in the CodeChain Explorer, the CodeChain Wallet.",
   "repository": "https://github.com/CodeChain-io/codechain-es",
   "dependencies": {
     "buffer": "^5.2.1",
     "codechain-sdk": "^0.4.0-rc3",
-    "elasticsearch": "^15.1.1",
     "lodash": "^4.17.10"
   },
   "scripts": {
     "lint": "tslint -p . && prettier 'src/**/*.{ts,js,json}' -l",
     "fmt": "tslint -p . --fix && prettier 'src/**/*.{ts,js,json}' --write",
     "build": "tsc -p .",
-    "test": "jest --env node",
-    "prepublishOnly": "yarn run lint && yarn run test && yarn run build"
+    "prepublishOnly": "yarn run lint && yarn run build"
   },
   "keywords": [
     "CodeChain"
@@ -27,29 +25,13 @@
   ],
   "license": "ISC",
   "devDependencies": {
-    "@types/elasticsearch": "^5.0.26",
-    "@types/jest": "^23.3.1",
+    "@types/jest": "^23.3.5",
     "@types/lodash": "^4.14.116",
     "@types/node": "^10.9.4",
-    "jest": "^23.5.0",
+    "jest": "^23.6.0",
     "prettier": "^1.14.2",
-    "ts-jest": "^23.1.4",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
     "typescript": "^3.0.3"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
   }
 }
