@@ -2,7 +2,7 @@
   "name": "codechain-indexer-types",
   "version": "0.1.0-alpha.0",
   "description": "CodeChain-indexer-types provides the rich object types of the CodeChain-primitive-js that are indexed by indexer and used in the CodeChain Explorer, the CodeChain Wallet.",
-  "repository": "https://github.com/CodeChain-io/codechain-es",
+  "repository": "https://github.com/CodeChain-io/codechain-es-js",
   "dependencies": {
     "buffer": "^5.2.1",
     "codechain-sdk": "^0.4.0-rc3",
