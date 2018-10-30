@@ -89,6 +89,21 @@ export interface AssetDoc {
     transactionOutputIndex: number;
 }
 
+export interface UTXO {
+    asset: AssetDoc;
+    assetScheme: AssetSchemeDoc;
+    blockNumber: number;
+    parcelIndex: number;
+    transactionIndex: number;
+}
+
+export interface AggsUTXO {
+    assetType: string;
+    assetScheme: AssetSchemeDoc;
+    totalAssetQuantity: number;
+    utxoQuantity: number;
+}
+
 export interface AssetMintTransactionDoc {
     type: string;
     data: {
