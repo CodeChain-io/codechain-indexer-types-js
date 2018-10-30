@@ -75,11 +75,6 @@ export interface AssetSchemeDoc {
     networkId: string;
 }
 
-export interface AssetBundleDoc {
-    assetScheme: AssetSchemeDoc;
-    asset: AssetDoc;
-}
-
 export interface AssetDoc {
     assetType: string;
     lockScriptHash: string;
