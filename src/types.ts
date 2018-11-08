@@ -182,7 +182,7 @@ export interface AssetComposeTransactionDoc {
     type: string;
     data: {
         networkId: string;
-        shardId: string;
+        shardId: number;
         metadata: string;
         registrar?: string | null;
         output: AssetMintOutputDoc;
