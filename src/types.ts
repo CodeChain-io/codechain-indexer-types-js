@@ -225,7 +225,7 @@ export interface Timelock {
 
 export interface AssetTransferInputDoc {
     prevOut: AssetOutPointDoc;
-    timelock: Timelock;
+    timelock?: Timelock | null;
     lockScript: Buffer;
     unlockScript: Buffer;
 }
