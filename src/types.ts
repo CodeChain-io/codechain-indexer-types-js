@@ -31,7 +31,6 @@ export interface ParcelDoc {
     /* custom field for indexing */
     signer: string;
     timestamp: number;
-    countOfTransaction: number;
     isRetracted: boolean;
 }
 
@@ -117,7 +116,6 @@ export interface UTXO {
     assetScheme: AssetSchemeDoc;
     blockNumber: number;
     parcelIndex: number;
-    transactionIndex: number;
 }
 
 export interface AggsUTXO {
@@ -142,7 +140,6 @@ export interface AssetMintTransactionDoc {
         parcelHash: string;
         blockNumber: number;
         parcelIndex: number;
-        transactionIndex: number;
         invoice?: boolean | null;
         errorType?: string | null;
     };
@@ -171,7 +168,6 @@ export interface AssetTransferTransactionDoc {
         parcelHash: string;
         blockNumber: number;
         parcelIndex: number;
-        transactionIndex: number;
         invoice?: boolean | null;
         errorType?: string | null;
     };
@@ -193,7 +189,6 @@ export interface AssetComposeTransactionDoc {
         parcelHash: string;
         blockNumber: number;
         parcelIndex: number;
-        transactionIndex: number;
         invoice?: boolean | null;
         errorType?: string | null;
     };
@@ -211,7 +206,6 @@ export interface AssetDecomposeTransactionDoc {
         parcelHash: string;
         blockNumber: number;
         parcelIndex: number;
-        transactionIndex: number;
         invoice?: boolean | null;
         errorType?: string | null;
     };
