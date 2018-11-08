@@ -186,7 +186,7 @@ export interface AssetComposeTransactionDoc {
         metadata: string;
         registrar?: string | null;
         output: AssetMintOutputDoc;
-        inputs: AssetTransferInputDoc;
+        inputs: AssetTransferInputDoc[];
         /* custom field for indexing */
         hash: string;
         timestamp: number;
