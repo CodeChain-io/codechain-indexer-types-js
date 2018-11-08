@@ -3,14 +3,14 @@ import {
     ActionDoc,
     AssetMintTransactionDoc,
     AssetSchemeDoc,
-    AssetTransactionGroupDoc,
+    AssetTransactionDoc,
     BlockDoc,
     ParcelDoc,
     TransactionDoc
 } from "./types";
 
-function isAssetTransactionGroupDoc(action: ActionDoc) {
-    return action.action === "assetTransactionGroup";
+function isAssetTransactionDoc(action: ActionDoc) {
+    return action.action === "assetTransaction";
 }
 
 function isPaymentDoc(action: ActionDoc) {
@@ -25,12 +25,28 @@ function isCreateShardDoc(action: ActionDoc) {
     return action.action === "createShard";
 }
 
+function isSetShardOwnersDoc(action: ActionDoc) {
+    return action.action === "setShardOwners";
+}
+
+function isSetShardUsersDoc(action: ActionDoc) {
+    return action.action === "setShardUsers";
+}
+
 function isAssetTransferTransactionDoc(transaction: TransactionDoc) {
     return transaction.type === "assetTransfer";
 }
 
 function isAssetMintTransactionDoc(transaction: TransactionDoc) {
     return transaction.type === "assetMint";
+}
+
+function isAssetComposeTransactionDoc(transaction: TransactionDoc) {
+    return transaction.type === "assetCompose";
+}
+
+function isAssetDecomposeTransactionDoc(transaction: TransactionDoc) {
+    return transaction.type === "assetDecompose";
 }
 
 function getAssetSchemeDoc(transaction: AssetMintTransactionDoc): AssetSchemeDoc {
@@ -49,19 +65,9 @@ function isH256String(data: string) {
 
 function getTransactionsByBlock(blockDoc: BlockDoc): TransactionDoc[] {
     return _.chain(blockDoc.parcels)
-        .filter((parcel: ParcelDoc) => isAssetTransactionGroupDoc(parcel.action))
-        .flatMap((parcel: ParcelDoc) => (parcel.action as AssetTransactionGroupDoc).transactions)
+        .filter((parcel: ParcelDoc) => isAssetTransactionDoc(parcel.action))
+        .map((parcel: ParcelDoc) => (parcel.action as AssetTransactionDoc).transaction)
         .value();
-}
-
-function getMintTransactionsByParcel(parcelDoc: ParcelDoc): AssetMintTransactionDoc[] {
-    if (isAssetTransactionGroupDoc(parcelDoc.action)) {
-        const assetTransactionGroupAction = parcelDoc.action as AssetTransactionGroupDoc;
-        return _.filter(assetTransactionGroupAction.transactions, (tx: TransactionDoc) =>
-            Type.isAssetMintTransactionDoc(tx)
-        ) as AssetMintTransactionDoc[];
-    }
-    return [];
 }
 
 export interface MetadataFormat {
@@ -80,15 +86,18 @@ const getMetadata = (data: string): MetadataFormat => {
 };
 
 export let Type = {
-    isAssetTransactionGroupDoc,
+    isAssetTransactionDoc,
     isPaymentDoc,
     isSetRegularKeyDoc,
     isCreateShardDoc,
+    isSetShardOwnersDoc,
+    isSetShardUsersDoc,
     isAssetTransferTransactionDoc,
     isAssetMintTransactionDoc,
+    isAssetComposeTransactionDoc,
+    isAssetDecomposeTransactionDoc,
     getAssetSchemeDoc,
     getMetadata,
     isH256String,
-    getTransactionsByBlock,
-    getMintTransactionsByParcel
+    getTransactionsByBlock
 };
