@@ -99,7 +99,8 @@ export interface AssetSchemeDoc {
     metadata: string;
     registrar?: string | null;
     amount?: string | null;
-    networkId: string;
+    networkId?: string | null;
+    shardId?: number | null;
 }
 
 export interface AssetDoc {
