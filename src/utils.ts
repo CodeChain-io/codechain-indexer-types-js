@@ -1,51 +1,59 @@
 import * as _ from "lodash";
 import {
     ActionDoc,
+    AssetComposeTransactionDoc,
+    AssetDecomposeTransactionDoc,
     AssetMintTransactionDoc,
     AssetSchemeDoc,
     AssetTransactionDoc,
+    AssetTransferTransactionDoc,
     BlockDoc,
+    CreateShardDoc,
     ParcelDoc,
+    PaymentDoc,
+    SetRegularKeyDoc,
+    SetShardOwnersDoc,
+    SetShardUsersDoc,
     TransactionDoc
 } from "./types";
 
-function isAssetTransactionDoc(action: ActionDoc) {
+function isAssetTransactionDoc(action: ActionDoc): action is AssetTransactionDoc {
     return action.action === "assetTransaction";
 }
 
-function isPaymentDoc(action: ActionDoc) {
+function isPaymentDoc(action: ActionDoc): action is PaymentDoc {
     return action.action === "payment";
 }
 
-function isSetRegularKeyDoc(action: ActionDoc) {
+function isSetRegularKeyDoc(action: ActionDoc): action is SetRegularKeyDoc {
     return action.action === "setRegularKey";
 }
 
-function isCreateShardDoc(action: ActionDoc) {
+function isCreateShardDoc(action: ActionDoc): action is CreateShardDoc {
     return action.action === "createShard";
 }
 
-function isSetShardOwnersDoc(action: ActionDoc) {
+function isSetShardOwnersDoc(action: ActionDoc): action is SetShardOwnersDoc {
     return action.action === "setShardOwners";
 }
 
-function isSetShardUsersDoc(action: ActionDoc) {
+function isSetShardUsersDoc(action: ActionDoc): action is SetShardUsersDoc {
     return action.action === "setShardUsers";
 }
 
-function isAssetTransferTransactionDoc(transaction: TransactionDoc) {
+function isAssetTransferTransactionDoc(transaction: TransactionDoc): transaction is AssetTransferTransactionDoc {
     return transaction.type === "assetTransfer";
 }
 
-function isAssetMintTransactionDoc(transaction: TransactionDoc) {
+function isAssetMintTransactionDoc(transaction: TransactionDoc): transaction is AssetMintTransactionDoc {
     return transaction.type === "assetMint";
 }
 
-function isAssetComposeTransactionDoc(transaction: TransactionDoc) {
+function isAssetComposeTransactionDoc(transaction: TransactionDoc): transaction is AssetComposeTransactionDoc {
     return transaction.type === "assetCompose";
 }
 
-function isAssetDecomposeTransactionDoc(transaction: TransactionDoc) {
+function isAssetDecomposeTransactionDoc(transaction: TransactionDoc): transaction is AssetDecomposeTransactionDoc {
     return transaction.type === "assetDecompose";
 }
 
@@ -68,6 +76,24 @@ function getTransactionsByBlock(blockDoc: BlockDoc): TransactionDoc[] {
         .filter((parcel: ParcelDoc) => isAssetTransactionDoc(parcel.action))
         .map((parcel: ParcelDoc) => (parcel.action as AssetTransactionDoc).transaction)
         .value();
+}
+
+function getMintTransactionByParcel(parcel: ParcelDoc): AssetMintTransactionDoc | undefined {
+    if (Type.isAssetTransactionDoc(parcel.action)) {
+        if (Type.isAssetMintTransactionDoc(parcel.action.transaction)) {
+            return parcel.action.transaction;
+        }
+    }
+    return undefined;
+}
+
+function getComposeTransactionByParcel(parcel: ParcelDoc): AssetComposeTransactionDoc | undefined {
+    if (Type.isAssetTransactionDoc(parcel.action)) {
+        if (Type.isAssetComposeTransactionDoc(parcel.action.transaction)) {
+            return parcel.action.transaction as AssetComposeTransactionDoc;
+        }
+    }
+    return undefined;
 }
 
 export interface MetadataFormat {
@@ -99,5 +125,7 @@ export let Type = {
     getAssetSchemeDoc,
     getMetadata,
     isH256String,
-    getTransactionsByBlock
+    getTransactionsByBlock,
+    getMintTransactionByParcel,
+    getComposeTransactionByParcel
 };
