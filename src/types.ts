@@ -38,12 +38,12 @@ export interface ParcelDoc {
 export type ActionDoc = AssetTransactionGroupDoc | PaymentDoc | SetRegularKeyDoc | CreateShardDoc;
 
 export interface AssetTransactionGroupDoc {
-    action: string;
+    action: "assetTransactionGroup";
     transactions: TransactionDoc[];
 }
 
 export interface PaymentDoc {
-    action: string;
+    action: "payment";
     receiver: string;
     amount: string;
     /* custom field for indexing */
@@ -52,7 +52,7 @@ export interface PaymentDoc {
 }
 
 export interface SetRegularKeyDoc {
-    action: string;
+    action: "setRegularKey";
     key: string;
     /* custom field for indexing */
     invoice?: boolean;
@@ -60,7 +60,7 @@ export interface SetRegularKeyDoc {
 }
 
 export interface CreateShardDoc {
-    action: string;
+    action: "createShard";
     /* custom field for indexing */
     invoice?: boolean;
     errorType?: string;
@@ -100,7 +100,7 @@ export interface AggsUTXO {
 }
 
 export interface AssetMintTransactionDoc {
-    type: string;
+    type: "assetMint";
     data: {
         output: {
             lockScriptHash: string;
@@ -129,7 +129,7 @@ export interface AssetMintTransactionDoc {
 }
 
 export interface AssetTransferTransactionDoc {
-    type: string;
+    type: "assetTransfer";
     data: {
         networkId: string;
         burns: AssetTransferInputDoc[];
