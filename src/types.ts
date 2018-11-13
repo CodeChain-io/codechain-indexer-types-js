@@ -193,6 +193,7 @@ export interface AssetComposeTransactionDoc {
         invoice?: boolean | null;
         errorType?: string | null;
     };
+    isRetracted: boolean;
 }
 
 export interface AssetDecomposeTransactionDoc {
@@ -210,6 +211,7 @@ export interface AssetDecomposeTransactionDoc {
         invoice?: boolean | null;
         errorType?: string | null;
     };
+    isRetracted: boolean;
 }
 
 export type TimelockType = "block" | "blockAge" | "time" | "timeAge";
