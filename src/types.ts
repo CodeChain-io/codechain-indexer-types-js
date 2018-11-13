@@ -43,12 +43,12 @@ export type ActionDoc =
     | SetShardUsersDoc;
 
 export interface AssetTransactionDoc {
-    action: string;
+    action: "assetTransaction";
     transaction: TransactionDoc;
 }
 
 export interface PaymentDoc {
-    action: string;
+    action: "payment";
     receiver: string;
     amount: string;
     /* custom field for indexing */
@@ -57,7 +57,7 @@ export interface PaymentDoc {
 }
 
 export interface SetRegularKeyDoc {
-    action: string;
+    action: "setRegularKey";
     key: string;
     /* custom field for indexing */
     invoice?: boolean;
@@ -65,14 +65,14 @@ export interface SetRegularKeyDoc {
 }
 
 export interface CreateShardDoc {
-    action: string;
+    action: "createShard";
     /* custom field for indexing */
     invoice?: boolean;
     errorType?: string;
 }
 
 export interface SetShardOwnersDoc {
-    action: string;
+    action: "setShardOwners";
     shardId: number;
     owners: string[];
     /* custom field for indexing */
@@ -81,7 +81,7 @@ export interface SetShardOwnersDoc {
 }
 
 export interface SetShardUsersDoc {
-    action: string;
+    action: "setShardUsers";
     shardId: number;
     users: string[];
     /* custom field for indexing */
@@ -127,7 +127,7 @@ export interface AggsUTXO {
 }
 
 export interface AssetMintTransactionDoc {
-    type: string;
+    type: "assetMint";
     data: {
         output: AssetMintOutputDoc;
         networkId: string;
@@ -157,7 +157,7 @@ export interface AssetMintOutputDoc {
 }
 
 export interface AssetTransferTransactionDoc {
-    type: string;
+    type: "assetTransfer";
     data: {
         networkId: string;
         burns: AssetTransferInputDoc[];
@@ -176,7 +176,7 @@ export interface AssetTransferTransactionDoc {
 }
 
 export interface AssetComposeTransactionDoc {
-    type: string;
+    type: "assetCompose";
     data: {
         networkId: string;
         shardId: number;
@@ -196,7 +196,7 @@ export interface AssetComposeTransactionDoc {
 }
 
 export interface AssetDecomposeTransactionDoc {
-    type: string;
+    type: "assetDecompose";
     data: {
         input: AssetTransferInputDoc;
         outputs: AssetTransferOutputDoc[];
