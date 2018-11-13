@@ -57,7 +57,7 @@ function isAssetDecomposeTransactionDoc(transaction: TransactionDoc): transactio
     return transaction.type === "assetDecompose";
 }
 
-function getAssetSchemeDoc(transaction: AssetMintTransactionDoc): AssetSchemeDoc {
+function getAssetSchemeDoc(transaction: AssetMintTransactionDoc | AssetComposeTransactionDoc): AssetSchemeDoc {
     return {
         metadata: transaction.data.metadata,
         registrar: transaction.data.registrar,
