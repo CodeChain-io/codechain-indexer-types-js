@@ -68,6 +68,7 @@ export interface MetadataFormat {
     name?: string;
     description?: string;
     icon_url?: string;
+    gateway?: string;
 }
 
 const getMetadata = (data: string): MetadataFormat => {
