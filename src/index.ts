@@ -1,5 +1,7 @@
 import * as _ from "lodash";
 
+export type NetworkId = "cc" | "tc" | "sc" | "wc";
+
 export interface BlockDoc {
     parentHash: string;
     timestamp: number;
@@ -19,12 +21,12 @@ export interface BlockDoc {
 }
 
 export interface ParcelDoc {
-    blockNumber: number | null;
-    blockHash: string | null;
-    parcelIndex: number | null;
+    blockNumber?: number | null;
+    blockHash?: string | null;
+    parcelIndex?: number | null;
     seq: string;
     fee: string;
-    networkId: string;
+    networkId: NetworkId;
     sig: string;
     hash: string;
     action: ActionDoc;
@@ -52,23 +54,23 @@ export interface PaymentDoc {
     receiver: string;
     amount: string;
     /* custom field for indexing */
-    invoice?: boolean;
-    errorType?: string;
+    invoice?: boolean | null;
+    errorType?: string | null;
 }
 
 export interface SetRegularKeyDoc {
     action: "setRegularKey";
     key: string;
     /* custom field for indexing */
-    invoice?: boolean;
-    errorType?: string;
+    invoice?: boolean | null;
+    errorType?: string | null;
 }
 
 export interface CreateShardDoc {
     action: "createShard";
     /* custom field for indexing */
-    invoice?: boolean;
-    errorType?: string;
+    invoice?: boolean | null;
+    errorType?: string | null;
 }
 
 export interface SetShardOwnersDoc {
@@ -76,8 +78,8 @@ export interface SetShardOwnersDoc {
     shardId: number;
     owners: string[];
     /* custom field for indexing */
-    invoice?: boolean;
-    errorType?: string;
+    invoice?: boolean | null;
+    errorType?: string | null;
 }
 
 export interface SetShardUsersDoc {
@@ -96,7 +98,7 @@ export type TransactionDoc =
     | AssetDecomposeTransactionDoc;
 
 export interface AssetSchemeDoc {
-    metadata: string;
+    metadata: Metadata;
     registrar?: string | null;
     amount?: string | null;
     networkId?: string | null;
@@ -132,7 +134,7 @@ export interface AssetMintTransactionDoc {
         output: AssetMintOutputDoc;
         networkId: string;
         shardId: number;
-        metadata: string;
+        metadata: Metadata;
         registrar?: string | null;
         /* custom field for indexing */
         hash: string;
@@ -180,7 +182,7 @@ export interface AssetComposeTransactionDoc {
     data: {
         networkId: string;
         shardId: number;
-        metadata: string;
+        metadata: Metadata;
         registrar?: string | null;
         output: AssetMintOutputDoc;
         inputs: AssetTransferInputDoc[];
@@ -259,4 +261,11 @@ export interface PendingTransactionDoc {
     transaction: TransactionDoc;
     status: string;
     timestamp: number;
+}
+
+export interface Metadata {
+    name?: string;
+    description?: string;
+    icon_url?: string;
+    gateway?: string;
 }
