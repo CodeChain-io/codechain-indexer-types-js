@@ -24,7 +24,7 @@ export interface ParcelDoc {
     blockNumber?: number | null;
     blockHash?: string | null;
     parcelIndex?: number | null;
-    seq: string;
+    seq: number;
     fee: string;
     networkId: NetworkId;
     sig: string;
