@@ -47,6 +47,9 @@ export type ActionDoc =
 export interface AssetTransactionDoc {
     action: "assetTransaction";
     transaction: TransactionDoc;
+    /* custom field for indexing */
+    invoice?: boolean | null;
+    errorType?: string | null;
 }
 
 export interface PaymentDoc {
