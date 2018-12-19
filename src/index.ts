@@ -16,7 +16,6 @@ export interface BlockDoc {
     hash: string;
     parcels: ParcelDoc[];
     /* custom field for indexing */
-    isRetracted: boolean;
     miningReward: string;
 }
 
@@ -33,7 +32,6 @@ export interface ParcelDoc {
     /* custom field for indexing */
     signer: string;
     timestamp: number;
-    isRetracted: boolean;
 }
 
 export type ActionDoc =
@@ -149,7 +147,6 @@ export interface AssetMintTransactionDoc {
         invoice?: boolean | null;
         errorType?: string | null;
     };
-    isRetracted: boolean;
 }
 
 export interface AssetMintOutputDoc {
@@ -177,7 +174,6 @@ export interface AssetTransferTransactionDoc {
         invoice?: boolean | null;
         errorType?: string | null;
     };
-    isRetracted: boolean;
 }
 
 export interface AssetComposeTransactionDoc {
@@ -198,7 +194,6 @@ export interface AssetComposeTransactionDoc {
         invoice?: boolean | null;
         errorType?: string | null;
     };
-    isRetracted: boolean;
 }
 
 export interface AssetDecomposeTransactionDoc {
@@ -216,7 +211,6 @@ export interface AssetDecomposeTransactionDoc {
         invoice?: boolean | null;
         errorType?: string | null;
     };
-    isRetracted: boolean;
 }
 
 export type TimelockType = "block" | "blockAge" | "time" | "timeAge";
