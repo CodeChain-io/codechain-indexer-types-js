@@ -81,7 +81,7 @@ export interface MintAssetTransactionDoc extends TransactionBaseDoc {
     };
 }
 
-export interface TransferAssetTransactionDoc {
+export interface TransferAssetTransactionDoc extends TransactionBaseDoc {
     type: "transferAsset";
     transferAsset: {
         networkId: string;
@@ -92,7 +92,7 @@ export interface TransferAssetTransactionDoc {
     };
 }
 
-export interface ComposeAssetTransactionDoc {
+export interface ComposeAssetTransactionDoc extends TransactionBaseDoc {
     type: "composeAsset";
     composeAsset: {
         networkId: string;
@@ -116,7 +116,7 @@ export interface ComposeAssetTransactionDoc {
     };
 }
 
-export interface DecomposeAssetTransactionDoc {
+export interface DecomposeAssetTransactionDoc extends TransactionBaseDoc {
     type: "decomposeAsset";
     decomposeAsset: {
         networkId: string;
