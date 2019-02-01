@@ -15,7 +15,7 @@ export interface BlockDoc {
     score: string;
     seal: Buffer[];
     miningReward: string;
-    transactions?: TransactionDoc[];
+    transactions: TransactionDoc[];
 }
 
 export type TransactionDoc =
@@ -66,8 +66,8 @@ export interface MintAssetTransactionDoc extends TransactionBaseDoc {
         networkId: string;
         shardId: number;
         metadata: string;
-        approver?: string | null;
-        administrator?: string | null;
+        approver: string | null;
+        administrator: string | null;
         allowedScriptHashes: string[];
         approvals: string[];
 
@@ -86,9 +86,9 @@ export interface TransferAssetTransactionDoc extends TransactionBaseDoc {
     transferAsset: {
         networkId: string;
         approvals: string[];
-        inputs?: AssetTransferInputDoc[];
-        burns?: AssetTransferInputDoc[];
-        outputs?: AssetTransferOutputDoc[];
+        inputs: AssetTransferInputDoc[];
+        burns: AssetTransferInputDoc[];
+        outputs: AssetTransferOutputDoc[];
     };
 }
 
@@ -98,8 +98,8 @@ export interface ComposeAssetTransactionDoc extends TransactionBaseDoc {
         networkId: string;
         shardId: number;
         metadata: string;
-        approver?: string | null;
-        administrator?: string | null;
+        approver: string | null;
+        administrator: string | null;
         allowedScriptHashes: string[];
 
         approvals: string[];
@@ -112,7 +112,7 @@ export interface ComposeAssetTransactionDoc extends TransactionBaseDoc {
         assetType: string;
         recipient: string;
 
-        inputs?: AssetTransferInputDoc[];
+        inputs: AssetTransferInputDoc[];
     };
 }
 
@@ -134,8 +134,8 @@ export interface Timelock {
 
 export interface AssetTransferInputDoc {
     prevOut: AssetOutPointDoc;
-    timelock?: Timelock | null;
-    owner?: string | null;
+    timelock: Timelock | null;
+    owner: string | null;
     assetType: string;
     lockScript: Buffer;
     unlockScript: Buffer;
@@ -147,20 +147,20 @@ export interface AssetOutPointDoc {
     assetType: string;
     assetScheme: AssetSchemeDoc;
     quantity: string;
-    owner?: string | null;
-    lockScriptHash?: string | null;
-    parameters?: string[] | null;
+    owner: string | null;
+    lockScriptHash: string | null;
+    parameters: string[] | null;
 }
 
 export interface AssetSchemeDoc {
     assetType: string;
     metadata: string;
-    approver?: string | null;
-    administrator?: string | null;
+    approver: string | null;
+    administrator: string | null;
     allowedScriptHashes: string[];
-    supply?: string | null;
-    networkId?: string | null;
-    shardId?: number | null;
+    supply: string | null;
+    networkId: string | null;
+    shardId: number | null;
 }
 
 export interface AssetTransferOutputDoc {
@@ -168,7 +168,7 @@ export interface AssetTransferOutputDoc {
     parameters: string[];
     assetType: string;
     quantity: string;
-    owner?: string | null;
+    owner: string | null;
     assetScheme: AssetSchemeDoc;
 }
 
@@ -193,7 +193,7 @@ export interface WrapCCCTransactionDoc extends TransactionBaseDoc {
 export interface UnwrapCCCTransactionDoc extends TransactionBaseDoc {
     type: "unwrapCCC";
     unwrapCCC: {
-        burn?: AssetTransferInputDoc;
+        burn: AssetTransferInputDoc;
     };
 }
 
