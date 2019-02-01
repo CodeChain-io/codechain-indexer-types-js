@@ -268,7 +268,7 @@ export interface AggsUTXODoc {
 }
 
 export interface UTXOSnapshotDoc {
-    snapshotId: string;
     blockNumber: number;
+    blockHash: string;
     snapshot: UTXODoc[];
 }
