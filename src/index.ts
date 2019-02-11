@@ -255,6 +255,7 @@ export interface UTXODoc {
     parameters: string[];
     quantity: string;
     transactionHash: string;
+    transactionTracker: string;
     transactionOutputIndex: number;
     usedTransactionHash: string | null;
     assetScheme: AssetSchemeDoc;
