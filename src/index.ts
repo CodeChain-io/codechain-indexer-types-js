@@ -44,8 +44,8 @@ export interface TransactionBaseDoc {
     networkId: string;
     sig: string;
     signer: string;
-    invoice?: boolean | null;
-    errorType?: string | null;
+    success?: boolean | null;
+    errorHint?: string | null;
     timestamp?: number | null;
     isPending: boolean;
     pendingTimestamp?: number | null;
