@@ -251,9 +251,11 @@ export interface AccountDoc {
 export interface UTXODoc {
     address: string;
     assetType: string;
+    shardId: number;
     lockScriptHash: string;
     parameters: string[];
     quantity: string;
+    orderHash: string | null;
     transactionHash: string;
     transactionTracker: string;
     transactionOutputIndex: number;
