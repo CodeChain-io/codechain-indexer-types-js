@@ -223,6 +223,7 @@ export interface AggsUTXODoc {
     assetType: string;
     totalAssetQuantity: number;
     utxoQuantity: number;
+    assetScheme: AssetSchemeDoc;
 }
 export interface UTXOSnapshotDoc {
     blockNumber: number;
