@@ -137,6 +137,7 @@ export interface AssetTransferInputDoc {
     timelock: Timelock | null;
     owner: string | null;
     assetType: string;
+    assetScheme: AssetSchemeDoc;
     lockScript: Buffer;
     unlockScript: Buffer;
 }
@@ -145,7 +146,6 @@ export interface AssetOutPointDoc {
     tracker: string;
     index: number;
     assetType: string;
-    assetScheme: AssetSchemeDoc;
     quantity: string;
     owner: string | null;
     lockScriptHash: string | null;
