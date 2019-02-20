@@ -55,7 +55,6 @@ export interface TransactionBaseDoc {
 export interface PayTransactionDoc extends TransactionBaseDoc {
     type: "pay";
     pay: {
-        transactionHash: string;
         receiver: string;
         quantity: string;
     };
@@ -227,7 +226,6 @@ export interface CreateShardTransactionDoc extends TransactionBaseDoc {
 export interface SetShardOwnersTransactionDoc extends TransactionBaseDoc {
     type: "setShardOwners";
     setShardOwners: {
-        transactionHash: string;
         shardId: number;
         owners: string[];
     };
