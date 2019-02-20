@@ -27,6 +27,7 @@ export type TransactionDoc =
     | WrapCCCTransactionDoc
     | UnwrapCCCTransactionDoc
     | ChangeAssetSchemeTransactionDoc
+    | IncreaseAssetSupplyDoc
     | SetRegularKeyTransactionDoc
     | CreateShardTransactionDoc
     | SetShardOwnersTransactionDoc
@@ -209,6 +210,20 @@ export interface ChangeAssetSchemeTransactionDoc extends TransactionBaseDoc {
         approver: string | null;
         administrator: string | null;
         allowedScriptHashes: string[];
+        approvals: string[];
+    };
+}
+
+export interface IncreaseAssetSupplyDoc extends TransactionBaseDoc {
+    type: "increaseAssetSupply";
+    increaseAssetSupply: {
+        assetType: string;
+        networkId: string;
+        shardId: number;
+        parameters: string[];
+        supply: string;
+        recipient: string;
+        lockScriptHash: string;
         approvals: string[];
     };
 }
