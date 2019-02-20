@@ -26,6 +26,7 @@ export type TransactionDoc =
     | DecomposeAssetTransactionDoc
     | WrapCCCTransactionDoc
     | UnwrapCCCTransactionDoc
+    | ChangeAssetSchemeTransactionDoc
     | SetRegularKeyTransactionDoc
     | CreateShardTransactionDoc
     | SetShardOwnersTransactionDoc
@@ -195,6 +196,20 @@ export interface UnwrapCCCTransactionDoc extends TransactionBaseDoc {
     type: "unwrapCCC";
     unwrapCCC: {
         burn: AssetTransferInputDoc;
+    };
+}
+
+export interface ChangeAssetSchemeTransactionDoc extends TransactionBaseDoc {
+    type: "changeAssetScheme";
+    changeAssetScheme: {
+        assetType: string;
+        networkId: string;
+        shardId: number;
+        metadata: string;
+        approver: string | null;
+        administrator: string | null;
+        allowedScriptHashes: string[];
+        approvals: string[];
     };
 }
 
