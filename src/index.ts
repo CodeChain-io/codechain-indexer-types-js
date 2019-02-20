@@ -30,6 +30,7 @@ export type TransactionDoc =
     | SetRegularKeyTransactionDoc
     | CreateShardTransactionDoc
     | SetShardOwnersTransactionDoc
+    | SetShardUsersTransactionDoc
     | StoreTransactionDoc
     | RemoveTransactionDoc
     | CustomTransactionDoc;
@@ -228,6 +229,14 @@ export interface SetShardOwnersTransactionDoc extends TransactionBaseDoc {
     setShardOwners: {
         shardId: number;
         owners: string[];
+    };
+}
+
+export interface SetShardUsersTransactionDoc extends TransactionBaseDoc {
+    type: "setShardUsers";
+    setShardUsers: {
+        shardId: number;
+        users: string[];
     };
 }
 
