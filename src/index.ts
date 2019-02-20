@@ -144,6 +144,7 @@ export interface AssetTransferInputDoc {
 
 export interface AssetOutPointDoc {
     tracker: string;
+    hash?: string;
     index: number;
     assetType: string;
     quantity: string;
