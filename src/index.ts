@@ -27,7 +27,7 @@ export type TransactionDoc =
     | WrapCCCTransactionDoc
     | UnwrapCCCTransactionDoc
     | ChangeAssetSchemeTransactionDoc
-    | IncreaseAssetSupplyDoc
+    | IncreaseAssetSupplyTransactionDoc
     | SetRegularKeyTransactionDoc
     | CreateShardTransactionDoc
     | SetShardOwnersTransactionDoc
@@ -214,7 +214,7 @@ export interface ChangeAssetSchemeTransactionDoc extends TransactionBaseDoc {
     };
 }
 
-export interface IncreaseAssetSupplyDoc extends TransactionBaseDoc {
+export interface IncreaseAssetSupplyTransactionDoc extends TransactionBaseDoc {
     type: "increaseAssetSupply";
     increaseAssetSupply: {
         assetType: string;
