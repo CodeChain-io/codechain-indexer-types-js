@@ -197,6 +197,7 @@ export interface UnwrapCCCTransactionDoc extends TransactionBaseDoc {
     type: "unwrapCCC";
     unwrapCCC: {
         burn: AssetTransferInputDoc;
+        receiver: string;
     };
 }
 
