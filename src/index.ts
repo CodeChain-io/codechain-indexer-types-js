@@ -161,9 +161,9 @@ export interface AssetSchemeDoc {
     approver: string | null;
     administrator: string | null;
     allowedScriptHashes: string[];
-    supply: string | null;
-    networkId: string | null;
-    shardId: number | null;
+    supply: string;
+    networkId: string;
+    shardId: number;
 }
 
 export interface AssetTransferOutputDoc {
