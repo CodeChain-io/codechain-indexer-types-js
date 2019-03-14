@@ -69,7 +69,7 @@ export interface MintAssetTransactionDoc extends TransactionBaseDoc {
         shardId: number;
         metadata: string;
         approver: string | null;
-        administrator: string | null;
+        registrar: string | null;
         allowedScriptHashes: string[];
         approvals: string[];
 
@@ -101,7 +101,7 @@ export interface ComposeAssetTransactionDoc extends TransactionBaseDoc {
         shardId: number;
         metadata: string;
         approver: string | null;
-        administrator: string | null;
+        registrar: string | null;
         allowedScriptHashes: string[];
 
         approvals: string[];
@@ -159,7 +159,7 @@ export interface AssetSchemeDoc {
     assetType: string;
     metadata: string;
     approver: string | null;
-    administrator: string | null;
+    registrar: string | null;
     allowedScriptHashes: string[];
     supply: string;
     networkId: string;
@@ -209,7 +209,7 @@ export interface ChangeAssetSchemeTransactionDoc extends TransactionBaseDoc {
         shardId: number;
         metadata: string;
         approver: string | null;
-        administrator: string | null;
+        registrar: string | null;
         allowedScriptHashes: string[];
         approvals: string[];
     };
