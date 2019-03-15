@@ -305,8 +305,8 @@ export interface UTXODoc {
 
 export interface AggsUTXODoc {
     assetType: string;
-    totalAssetQuantity: number;
-    utxoQuantity: number;
+    totalAssetQuantity: string;
+    utxoQuantity: string;
     assetScheme: AssetSchemeDoc;
 }
 
