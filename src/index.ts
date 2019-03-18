@@ -89,7 +89,7 @@ export interface TransferAssetTransactionDoc extends TransactionBaseDoc {
         networkId: string;
         metadata: string;
         approvals: string[];
-        expiration: number;
+        expiration?: number;
         inputs: AssetTransferInputDoc[];
         burns: AssetTransferInputDoc[];
         outputs: AssetTransferOutputDoc[];
