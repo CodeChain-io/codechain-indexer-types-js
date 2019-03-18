@@ -89,7 +89,7 @@ export interface TransferAssetTransactionDoc extends TransactionBaseDoc {
         networkId: string;
         metadata: string;
         approvals: string[];
-        expiration?: number;
+        expiration?: string;
         inputs: AssetTransferInputDoc[];
         burns: AssetTransferInputDoc[];
         outputs: AssetTransferOutputDoc[];
@@ -199,7 +199,7 @@ export interface OrderDoc {
     assetQuantityFee: string;
 
     originOutputs: AssetOutPointDoc[];
-    expiration: number;
+    expiration: string;
     lockScriptHashFrom: string;
     parametersFrom: string[];
     lockScriptHashFee: string;
