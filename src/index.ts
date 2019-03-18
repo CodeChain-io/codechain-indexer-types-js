@@ -93,6 +93,7 @@ export interface TransferAssetTransactionDoc extends TransactionBaseDoc {
         inputs: AssetTransferInputDoc[];
         burns: AssetTransferInputDoc[];
         outputs: AssetTransferOutputDoc[];
+        orders: OrderOnTransferDoc[];
     };
 }
 
@@ -175,6 +176,34 @@ export interface AssetTransferOutputDoc {
     quantity: string;
     owner: string | null;
     assetScheme: AssetSchemeDoc;
+}
+
+export interface OrderOnTransferDoc {
+    order?: OrderDoc;
+    spentQuantity: string;
+    inputIndices: number[];
+    outputIndices: number[];
+}
+
+export interface OrderDoc {
+    orderHash: string;
+
+    assetTypeFrom: string;
+    assetTypeTo: string;
+    assetTypeFee: string;
+    shardIdFrom: number;
+    shardIdTo: number;
+    shardIdFee: number;
+    assetQuantityFrom: string;
+    assetQuantityTo: string;
+    assetQuantityFee: string;
+
+    originOutputs: AssetOutPointDoc[];
+    expiration: number;
+    lockScriptHashFrom: string;
+    parametersFrom: string[];
+    lockScriptHashFee: string;
+    parametersFee: string[];
 }
 
 export interface Metadata {
