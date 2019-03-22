@@ -142,7 +142,7 @@ export interface AssetTransferInputDoc {
     timelock: Timelock | null;
     owner: string | null;
     assetType: string;
-    assetScheme: AssetSchemeDoc;
+    assetScheme: AssetSchemeDoc | null;
     lockScript: Buffer;
     unlockScript: Buffer;
 }
@@ -175,7 +175,7 @@ export interface AssetTransferOutputDoc {
     assetType: string;
     quantity: string;
     owner: string | null;
-    assetScheme: AssetSchemeDoc;
+    assetScheme: AssetSchemeDoc | null;
 }
 
 export interface OrderOnTransferDoc {
