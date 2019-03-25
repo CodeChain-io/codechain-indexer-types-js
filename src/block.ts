@@ -1,5 +1,3 @@
-import { TransactionDoc } from "./transaction";
-
 export interface BlockDoc {
     hash: string;
     parentHash: string;
@@ -13,5 +11,5 @@ export interface BlockDoc {
     score: string;
     seal: Buffer[];
     miningReward: string;
-    transactions: TransactionDoc[];
+    transactionsCount: number;
 }
