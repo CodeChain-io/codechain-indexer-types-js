@@ -121,6 +121,7 @@ export interface AssetTransferInputDoc {
     timelock: Timelock | null;
     owner: string | null;
     assetType: string;
+    shardId: string;
     assetScheme: AssetSchemeDoc | null;
     lockScript: Buffer;
     unlockScript: Buffer;
@@ -128,9 +129,10 @@ export interface AssetTransferInputDoc {
 
 export interface AssetOutPointDoc {
     tracker: string;
-    hash?: string;
+    hash: string | null;
     index: number;
     assetType: string;
+    shardId: number;
     quantity: string;
     owner: string | null;
     lockScriptHash: string | null;
@@ -152,6 +154,7 @@ export interface AssetTransferOutputDoc {
     lockScriptHash: string;
     parameters: string[];
     assetType: string;
+    shardId: number;
     quantity: string;
     owner: string | null;
     assetScheme: AssetSchemeDoc | null;
