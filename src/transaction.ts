@@ -27,7 +27,6 @@ export interface TransactionBaseDoc {
     networkId: string;
     sig: string;
     signer: string;
-    success?: boolean | null;
     errorHint?: string | null;
     timestamp?: number | null;
     isPending: boolean;

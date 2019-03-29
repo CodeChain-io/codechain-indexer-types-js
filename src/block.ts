@@ -7,7 +7,6 @@ export interface BlockDoc {
     extraData: Buffer;
     transactionsRoot: string;
     stateRoot: string;
-    resultsRoot: string;
     score: string;
     seal: Buffer[];
     miningReward: string;
