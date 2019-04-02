@@ -18,6 +18,7 @@ export interface UTXODoc {
 
 export interface AggsUTXODoc {
     assetType: string;
+    address: string;
     totalAssetQuantity: string;
     utxoQuantity: string;
     assetScheme: AssetSchemeDoc;
@@ -26,5 +27,5 @@ export interface AggsUTXODoc {
 export interface UTXOSnapshotDoc {
     blockNumber: number;
     blockHash: string;
-    snapshot: UTXODoc[];
+    snapshot: AggsUTXODoc[];
 }
