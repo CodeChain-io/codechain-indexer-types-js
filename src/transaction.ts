@@ -148,6 +148,7 @@ export interface AssetSchemeDoc {
     supply: string;
     networkId: string;
     shardId: number;
+    seq: number;
 }
 
 export interface AssetTransferOutputDoc {
@@ -225,6 +226,7 @@ export interface ChangeAssetSchemeTransactionDoc extends TransactionBaseDoc {
         registrar: string | null;
         allowedScriptHashes: string[];
         approvals: string[];
+        seq: number;
     };
 }
 
@@ -239,6 +241,7 @@ export interface IncreaseAssetSupplyTransactionDoc extends TransactionBaseDoc {
         recipient: string;
         lockScriptHash: string;
         approvals: string[];
+        seq: number;
     };
 }
 
