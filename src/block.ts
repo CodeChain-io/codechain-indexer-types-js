@@ -11,4 +11,8 @@ export interface BlockDoc {
     seal: Buffer[];
     miningReward: string;
     transactionsCount: number;
+    transactionsCountByType: {
+        [type: string]: number;
+    };
+    size: number;
 }
