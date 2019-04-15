@@ -10,3 +10,4 @@ export interface AccountDoc {
 export * from "./block";
 export * from "./transaction";
 export * from "./utxo";
+export * from "./balanceHistory";
